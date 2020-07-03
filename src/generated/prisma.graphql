@@ -1,0 +1,3072 @@
+# source: http://localhost:4466
+# timestamp: Fri Jul 03 2020 13:54:29 GMT+1000 (Australian Eastern Standard Time)
+
+type AggregateFreetime {
+  count: Int!
+}
+
+type AggregateItem {
+  count: Int!
+}
+
+type AggregateSchedule {
+  count: Int!
+}
+
+type AggregateSchedule_Day {
+  count: Int!
+}
+
+type AggregateSchedule_Interval {
+  count: Int!
+}
+
+type AggregateSchedule_Staff {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+scalar DateTime
+
+type Freetime implements Node {
+  id: ID!
+  availability: String!
+  staff: User!
+  schedule: Schedule
+  schedule_day: Schedule_Day
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type FreetimeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FreetimeEdge]!
+  aggregate: AggregateFreetime!
+}
+
+input FreetimeCreateInput {
+  id: ID
+  availability: String!
+  staff: UserCreateOneWithoutFreetimesInput!
+  schedule: ScheduleCreateOneWithoutFreetimesInput
+  schedule_day: Schedule_DayCreateOneWithoutFreetimesInput
+}
+
+input FreetimeCreateManyWithoutSchedule_dayInput {
+  create: [FreetimeCreateWithoutSchedule_dayInput!]
+  connect: [FreetimeWhereUniqueInput!]
+}
+
+input FreetimeCreateManyWithoutScheduleInput {
+  create: [FreetimeCreateWithoutScheduleInput!]
+  connect: [FreetimeWhereUniqueInput!]
+}
+
+input FreetimeCreateManyWithoutStaffInput {
+  create: [FreetimeCreateWithoutStaffInput!]
+  connect: [FreetimeWhereUniqueInput!]
+}
+
+input FreetimeCreateWithoutSchedule_dayInput {
+  id: ID
+  availability: String!
+  staff: UserCreateOneWithoutFreetimesInput!
+  schedule: ScheduleCreateOneWithoutFreetimesInput
+}
+
+input FreetimeCreateWithoutScheduleInput {
+  id: ID
+  availability: String!
+  staff: UserCreateOneWithoutFreetimesInput!
+  schedule_day: Schedule_DayCreateOneWithoutFreetimesInput
+}
+
+input FreetimeCreateWithoutStaffInput {
+  id: ID
+  availability: String!
+  schedule: ScheduleCreateOneWithoutFreetimesInput
+  schedule_day: Schedule_DayCreateOneWithoutFreetimesInput
+}
+
+"""An edge in a connection."""
+type FreetimeEdge {
+  """The item at the end of the edge."""
+  node: Freetime!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FreetimeOrderByInput {
+  id_ASC
+  id_DESC
+  availability_ASC
+  availability_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type FreetimePreviousValues {
+  id: ID!
+  availability: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input FreetimeScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FreetimeScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FreetimeScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FreetimeScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  availability: String
+
+  """All values that are not equal to given value."""
+  availability_not: String
+
+  """All values that are contained in given list."""
+  availability_in: [String!]
+
+  """All values that are not contained in given list."""
+  availability_not_in: [String!]
+
+  """All values less than the given value."""
+  availability_lt: String
+
+  """All values less than or equal the given value."""
+  availability_lte: String
+
+  """All values greater than the given value."""
+  availability_gt: String
+
+  """All values greater than or equal the given value."""
+  availability_gte: String
+
+  """All values containing the given string."""
+  availability_contains: String
+
+  """All values not containing the given string."""
+  availability_not_contains: String
+
+  """All values starting with the given string."""
+  availability_starts_with: String
+
+  """All values not starting with the given string."""
+  availability_not_starts_with: String
+
+  """All values ending with the given string."""
+  availability_ends_with: String
+
+  """All values not ending with the given string."""
+  availability_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+}
+
+type FreetimeSubscriptionPayload {
+  mutation: MutationType!
+  node: Freetime
+  updatedFields: [String!]
+  previousValues: FreetimePreviousValues
+}
+
+input FreetimeSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FreetimeSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FreetimeSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FreetimeSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FreetimeWhereInput
+}
+
+input FreetimeUpdateInput {
+  availability: String
+  staff: UserUpdateOneRequiredWithoutFreetimesInput
+  schedule: ScheduleUpdateOneWithoutFreetimesInput
+  schedule_day: Schedule_DayUpdateOneWithoutFreetimesInput
+}
+
+input FreetimeUpdateManyDataInput {
+  availability: String
+}
+
+input FreetimeUpdateManyMutationInput {
+  availability: String
+}
+
+input FreetimeUpdateManyWithoutSchedule_dayInput {
+  create: [FreetimeCreateWithoutSchedule_dayInput!]
+  connect: [FreetimeWhereUniqueInput!]
+  set: [FreetimeWhereUniqueInput!]
+  disconnect: [FreetimeWhereUniqueInput!]
+  delete: [FreetimeWhereUniqueInput!]
+  update: [FreetimeUpdateWithWhereUniqueWithoutSchedule_dayInput!]
+  updateMany: [FreetimeUpdateManyWithWhereNestedInput!]
+  deleteMany: [FreetimeScalarWhereInput!]
+  upsert: [FreetimeUpsertWithWhereUniqueWithoutSchedule_dayInput!]
+}
+
+input FreetimeUpdateManyWithoutScheduleInput {
+  create: [FreetimeCreateWithoutScheduleInput!]
+  connect: [FreetimeWhereUniqueInput!]
+  set: [FreetimeWhereUniqueInput!]
+  disconnect: [FreetimeWhereUniqueInput!]
+  delete: [FreetimeWhereUniqueInput!]
+  update: [FreetimeUpdateWithWhereUniqueWithoutScheduleInput!]
+  updateMany: [FreetimeUpdateManyWithWhereNestedInput!]
+  deleteMany: [FreetimeScalarWhereInput!]
+  upsert: [FreetimeUpsertWithWhereUniqueWithoutScheduleInput!]
+}
+
+input FreetimeUpdateManyWithoutStaffInput {
+  create: [FreetimeCreateWithoutStaffInput!]
+  connect: [FreetimeWhereUniqueInput!]
+  set: [FreetimeWhereUniqueInput!]
+  disconnect: [FreetimeWhereUniqueInput!]
+  delete: [FreetimeWhereUniqueInput!]
+  update: [FreetimeUpdateWithWhereUniqueWithoutStaffInput!]
+  updateMany: [FreetimeUpdateManyWithWhereNestedInput!]
+  deleteMany: [FreetimeScalarWhereInput!]
+  upsert: [FreetimeUpsertWithWhereUniqueWithoutStaffInput!]
+}
+
+input FreetimeUpdateManyWithWhereNestedInput {
+  where: FreetimeScalarWhereInput!
+  data: FreetimeUpdateManyDataInput!
+}
+
+input FreetimeUpdateWithoutSchedule_dayDataInput {
+  availability: String
+  staff: UserUpdateOneRequiredWithoutFreetimesInput
+  schedule: ScheduleUpdateOneWithoutFreetimesInput
+}
+
+input FreetimeUpdateWithoutScheduleDataInput {
+  availability: String
+  staff: UserUpdateOneRequiredWithoutFreetimesInput
+  schedule_day: Schedule_DayUpdateOneWithoutFreetimesInput
+}
+
+input FreetimeUpdateWithoutStaffDataInput {
+  availability: String
+  schedule: ScheduleUpdateOneWithoutFreetimesInput
+  schedule_day: Schedule_DayUpdateOneWithoutFreetimesInput
+}
+
+input FreetimeUpdateWithWhereUniqueWithoutSchedule_dayInput {
+  where: FreetimeWhereUniqueInput!
+  data: FreetimeUpdateWithoutSchedule_dayDataInput!
+}
+
+input FreetimeUpdateWithWhereUniqueWithoutScheduleInput {
+  where: FreetimeWhereUniqueInput!
+  data: FreetimeUpdateWithoutScheduleDataInput!
+}
+
+input FreetimeUpdateWithWhereUniqueWithoutStaffInput {
+  where: FreetimeWhereUniqueInput!
+  data: FreetimeUpdateWithoutStaffDataInput!
+}
+
+input FreetimeUpsertWithWhereUniqueWithoutSchedule_dayInput {
+  where: FreetimeWhereUniqueInput!
+  update: FreetimeUpdateWithoutSchedule_dayDataInput!
+  create: FreetimeCreateWithoutSchedule_dayInput!
+}
+
+input FreetimeUpsertWithWhereUniqueWithoutScheduleInput {
+  where: FreetimeWhereUniqueInput!
+  update: FreetimeUpdateWithoutScheduleDataInput!
+  create: FreetimeCreateWithoutScheduleInput!
+}
+
+input FreetimeUpsertWithWhereUniqueWithoutStaffInput {
+  where: FreetimeWhereUniqueInput!
+  update: FreetimeUpdateWithoutStaffDataInput!
+  create: FreetimeCreateWithoutStaffInput!
+}
+
+input FreetimeWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FreetimeWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FreetimeWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FreetimeWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  availability: String
+
+  """All values that are not equal to given value."""
+  availability_not: String
+
+  """All values that are contained in given list."""
+  availability_in: [String!]
+
+  """All values that are not contained in given list."""
+  availability_not_in: [String!]
+
+  """All values less than the given value."""
+  availability_lt: String
+
+  """All values less than or equal the given value."""
+  availability_lte: String
+
+  """All values greater than the given value."""
+  availability_gt: String
+
+  """All values greater than or equal the given value."""
+  availability_gte: String
+
+  """All values containing the given string."""
+  availability_contains: String
+
+  """All values not containing the given string."""
+  availability_not_contains: String
+
+  """All values starting with the given string."""
+  availability_starts_with: String
+
+  """All values not starting with the given string."""
+  availability_not_starts_with: String
+
+  """All values ending with the given string."""
+  availability_ends_with: String
+
+  """All values not ending with the given string."""
+  availability_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  staff: UserWhereInput
+  schedule: ScheduleWhereInput
+  schedule_day: Schedule_DayWhereInput
+}
+
+input FreetimeWhereUniqueInput {
+  id: ID
+}
+
+type Item implements Node {
+  id: ID!
+  description_en: String!
+  description_cn: String!
+  popularity: Int!
+  category: String!
+}
+
+"""A connection to a list of items."""
+type ItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ItemEdge]!
+  aggregate: AggregateItem!
+}
+
+input ItemCreateInput {
+  id: ID
+  description_en: String!
+  description_cn: String!
+  popularity: Int!
+  category: String!
+}
+
+"""An edge in a connection."""
+type ItemEdge {
+  """The item at the end of the edge."""
+  node: Item!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ItemOrderByInput {
+  id_ASC
+  id_DESC
+  description_en_ASC
+  description_en_DESC
+  description_cn_ASC
+  description_cn_DESC
+  popularity_ASC
+  popularity_DESC
+  category_ASC
+  category_DESC
+}
+
+type ItemPreviousValues {
+  id: ID!
+  description_en: String!
+  description_cn: String!
+  popularity: Int!
+  category: String!
+}
+
+type ItemSubscriptionPayload {
+  mutation: MutationType!
+  node: Item
+  updatedFields: [String!]
+  previousValues: ItemPreviousValues
+}
+
+input ItemSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ItemSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ItemSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ItemSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ItemWhereInput
+}
+
+input ItemUpdateInput {
+  description_en: String
+  description_cn: String
+  popularity: Int
+  category: String
+}
+
+input ItemUpdateManyMutationInput {
+  description_en: String
+  description_cn: String
+  popularity: Int
+  category: String
+}
+
+input ItemWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ItemWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ItemWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ItemWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  description_en: String
+
+  """All values that are not equal to given value."""
+  description_en_not: String
+
+  """All values that are contained in given list."""
+  description_en_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_en_not_in: [String!]
+
+  """All values less than the given value."""
+  description_en_lt: String
+
+  """All values less than or equal the given value."""
+  description_en_lte: String
+
+  """All values greater than the given value."""
+  description_en_gt: String
+
+  """All values greater than or equal the given value."""
+  description_en_gte: String
+
+  """All values containing the given string."""
+  description_en_contains: String
+
+  """All values not containing the given string."""
+  description_en_not_contains: String
+
+  """All values starting with the given string."""
+  description_en_starts_with: String
+
+  """All values not starting with the given string."""
+  description_en_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_en_ends_with: String
+
+  """All values not ending with the given string."""
+  description_en_not_ends_with: String
+  description_cn: String
+
+  """All values that are not equal to given value."""
+  description_cn_not: String
+
+  """All values that are contained in given list."""
+  description_cn_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_cn_not_in: [String!]
+
+  """All values less than the given value."""
+  description_cn_lt: String
+
+  """All values less than or equal the given value."""
+  description_cn_lte: String
+
+  """All values greater than the given value."""
+  description_cn_gt: String
+
+  """All values greater than or equal the given value."""
+  description_cn_gte: String
+
+  """All values containing the given string."""
+  description_cn_contains: String
+
+  """All values not containing the given string."""
+  description_cn_not_contains: String
+
+  """All values starting with the given string."""
+  description_cn_starts_with: String
+
+  """All values not starting with the given string."""
+  description_cn_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_cn_ends_with: String
+
+  """All values not ending with the given string."""
+  description_cn_not_ends_with: String
+  popularity: Int
+
+  """All values that are not equal to given value."""
+  popularity_not: Int
+
+  """All values that are contained in given list."""
+  popularity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  popularity_not_in: [Int!]
+
+  """All values less than the given value."""
+  popularity_lt: Int
+
+  """All values less than or equal the given value."""
+  popularity_lte: Int
+
+  """All values greater than the given value."""
+  popularity_gt: Int
+
+  """All values greater than or equal the given value."""
+  popularity_gte: Int
+  category: String
+
+  """All values that are not equal to given value."""
+  category_not: String
+
+  """All values that are contained in given list."""
+  category_in: [String!]
+
+  """All values that are not contained in given list."""
+  category_not_in: [String!]
+
+  """All values less than the given value."""
+  category_lt: String
+
+  """All values less than or equal the given value."""
+  category_lte: String
+
+  """All values greater than the given value."""
+  category_gt: String
+
+  """All values greater than or equal the given value."""
+  category_gte: String
+
+  """All values containing the given string."""
+  category_contains: String
+
+  """All values not containing the given string."""
+  category_not_contains: String
+
+  """All values starting with the given string."""
+  category_starts_with: String
+
+  """All values not starting with the given string."""
+  category_not_starts_with: String
+
+  """All values ending with the given string."""
+  category_ends_with: String
+
+  """All values not ending with the given string."""
+  category_not_ends_with: String
+}
+
+input ItemWhereUniqueInput {
+  id: ID
+}
+
+"""Raw JSON value"""
+scalar Json
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createSchedule(data: ScheduleCreateInput!): Schedule!
+  createFreetime(data: FreetimeCreateInput!): Freetime!
+  createSchedule_Day(data: Schedule_DayCreateInput!): Schedule_Day!
+  createSchedule_Staff(data: Schedule_StaffCreateInput!): Schedule_Staff!
+  createItem(data: ItemCreateInput!): Item!
+  createUser(data: UserCreateInput!): User!
+  createSchedule_Interval(data: Schedule_IntervalCreateInput!): Schedule_Interval!
+  updateSchedule(data: ScheduleUpdateInput!, where: ScheduleWhereUniqueInput!): Schedule
+  updateFreetime(data: FreetimeUpdateInput!, where: FreetimeWhereUniqueInput!): Freetime
+  updateSchedule_Day(data: Schedule_DayUpdateInput!, where: Schedule_DayWhereUniqueInput!): Schedule_Day
+  updateSchedule_Staff(data: Schedule_StaffUpdateInput!, where: Schedule_StaffWhereUniqueInput!): Schedule_Staff
+  updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateSchedule_Interval(data: Schedule_IntervalUpdateInput!, where: Schedule_IntervalWhereUniqueInput!): Schedule_Interval
+  deleteSchedule(where: ScheduleWhereUniqueInput!): Schedule
+  deleteFreetime(where: FreetimeWhereUniqueInput!): Freetime
+  deleteSchedule_Day(where: Schedule_DayWhereUniqueInput!): Schedule_Day
+  deleteSchedule_Staff(where: Schedule_StaffWhereUniqueInput!): Schedule_Staff
+  deleteItem(where: ItemWhereUniqueInput!): Item
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteSchedule_Interval(where: Schedule_IntervalWhereUniqueInput!): Schedule_Interval
+  upsertSchedule(where: ScheduleWhereUniqueInput!, create: ScheduleCreateInput!, update: ScheduleUpdateInput!): Schedule!
+  upsertFreetime(where: FreetimeWhereUniqueInput!, create: FreetimeCreateInput!, update: FreetimeUpdateInput!): Freetime!
+  upsertSchedule_Day(where: Schedule_DayWhereUniqueInput!, create: Schedule_DayCreateInput!, update: Schedule_DayUpdateInput!): Schedule_Day!
+  upsertSchedule_Staff(where: Schedule_StaffWhereUniqueInput!, create: Schedule_StaffCreateInput!, update: Schedule_StaffUpdateInput!): Schedule_Staff!
+  upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertSchedule_Interval(where: Schedule_IntervalWhereUniqueInput!, create: Schedule_IntervalCreateInput!, update: Schedule_IntervalUpdateInput!): Schedule_Interval!
+  updateManySchedules(data: ScheduleUpdateManyMutationInput!, where: ScheduleWhereInput): BatchPayload!
+  updateManyFreetimes(data: FreetimeUpdateManyMutationInput!, where: FreetimeWhereInput): BatchPayload!
+  updateManySchedule_Days(data: Schedule_DayUpdateManyMutationInput!, where: Schedule_DayWhereInput): BatchPayload!
+  updateManySchedule_Staffs(data: Schedule_StaffUpdateManyMutationInput!, where: Schedule_StaffWhereInput): BatchPayload!
+  updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManySchedule_Intervals(data: Schedule_IntervalUpdateManyMutationInput!, where: Schedule_IntervalWhereInput): BatchPayload!
+  deleteManySchedules(where: ScheduleWhereInput): BatchPayload!
+  deleteManyFreetimes(where: FreetimeWhereInput): BatchPayload!
+  deleteManySchedule_Days(where: Schedule_DayWhereInput): BatchPayload!
+  deleteManySchedule_Staffs(where: Schedule_StaffWhereInput): BatchPayload!
+  deleteManyItems(where: ItemWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManySchedule_Intervals(where: Schedule_IntervalWhereInput): BatchPayload!
+  executeRaw(database: PrismaDatabase, query: String!): Json!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+enum PrismaDatabase {
+  default
+}
+
+type Query {
+  schedules(where: ScheduleWhereInput, orderBy: ScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule]!
+  freetimes(where: FreetimeWhereInput, orderBy: FreetimeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Freetime]!
+  schedule_Days(where: Schedule_DayWhereInput, orderBy: Schedule_DayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule_Day]!
+  schedule_Staffs(where: Schedule_StaffWhereInput, orderBy: Schedule_StaffOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule_Staff]!
+  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  schedule_Intervals(where: Schedule_IntervalWhereInput, orderBy: Schedule_IntervalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule_Interval]!
+  schedule(where: ScheduleWhereUniqueInput!): Schedule
+  freetime(where: FreetimeWhereUniqueInput!): Freetime
+  schedule_Day(where: Schedule_DayWhereUniqueInput!): Schedule_Day
+  schedule_Staff(where: Schedule_StaffWhereUniqueInput!): Schedule_Staff
+  item(where: ItemWhereUniqueInput!): Item
+  user(where: UserWhereUniqueInput!): User
+  schedule_Interval(where: Schedule_IntervalWhereUniqueInput!): Schedule_Interval
+  schedulesConnection(where: ScheduleWhereInput, orderBy: ScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ScheduleConnection!
+  freetimesConnection(where: FreetimeWhereInput, orderBy: FreetimeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FreetimeConnection!
+  schedule_DaysConnection(where: Schedule_DayWhereInput, orderBy: Schedule_DayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): Schedule_DayConnection!
+  schedule_StaffsConnection(where: Schedule_StaffWhereInput, orderBy: Schedule_StaffOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): Schedule_StaffConnection!
+  itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  schedule_IntervalsConnection(where: Schedule_IntervalWhereInput, orderBy: Schedule_IntervalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): Schedule_IntervalConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Schedule implements Node {
+  id: ID!
+  schedule_No: String!
+  schedule_days(where: Schedule_DayWhereInput, orderBy: Schedule_DayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule_Day!]
+  schedule_staffs(where: Schedule_StaffWhereInput, orderBy: Schedule_StaffOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule_Staff!]
+  freetimes(where: FreetimeWhereInput, orderBy: FreetimeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Freetime!]
+}
+
+type Schedule_Day implements Node {
+  id: ID!
+  day_No: String!
+  schedule_staffs(where: Schedule_StaffWhereInput, orderBy: Schedule_StaffOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule_Staff!]
+  schedule: Schedule!
+  freetimes(where: FreetimeWhereInput, orderBy: FreetimeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Freetime!]
+}
+
+"""A connection to a list of items."""
+type Schedule_DayConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [Schedule_DayEdge]!
+  aggregate: AggregateSchedule_Day!
+}
+
+input Schedule_DayCreateInput {
+  id: ID
+  day_No: String!
+  schedule_staffs: Schedule_StaffCreateManyWithoutSchedule_dayInput
+  schedule: ScheduleCreateOneWithoutSchedule_daysInput!
+  freetimes: FreetimeCreateManyWithoutSchedule_dayInput
+}
+
+input Schedule_DayCreateManyWithoutScheduleInput {
+  create: [Schedule_DayCreateWithoutScheduleInput!]
+  connect: [Schedule_DayWhereUniqueInput!]
+}
+
+input Schedule_DayCreateOneWithoutFreetimesInput {
+  create: Schedule_DayCreateWithoutFreetimesInput
+  connect: Schedule_DayWhereUniqueInput
+}
+
+input Schedule_DayCreateOneWithoutSchedule_staffsInput {
+  create: Schedule_DayCreateWithoutSchedule_staffsInput
+  connect: Schedule_DayWhereUniqueInput
+}
+
+input Schedule_DayCreateWithoutFreetimesInput {
+  id: ID
+  day_No: String!
+  schedule_staffs: Schedule_StaffCreateManyWithoutSchedule_dayInput
+  schedule: ScheduleCreateOneWithoutSchedule_daysInput!
+}
+
+input Schedule_DayCreateWithoutSchedule_staffsInput {
+  id: ID
+  day_No: String!
+  schedule: ScheduleCreateOneWithoutSchedule_daysInput!
+  freetimes: FreetimeCreateManyWithoutSchedule_dayInput
+}
+
+input Schedule_DayCreateWithoutScheduleInput {
+  id: ID
+  day_No: String!
+  schedule_staffs: Schedule_StaffCreateManyWithoutSchedule_dayInput
+  freetimes: FreetimeCreateManyWithoutSchedule_dayInput
+}
+
+"""An edge in a connection."""
+type Schedule_DayEdge {
+  """The item at the end of the edge."""
+  node: Schedule_Day!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum Schedule_DayOrderByInput {
+  id_ASC
+  id_DESC
+  day_No_ASC
+  day_No_DESC
+}
+
+type Schedule_DayPreviousValues {
+  id: ID!
+  day_No: String!
+}
+
+input Schedule_DayScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [Schedule_DayScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [Schedule_DayScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [Schedule_DayScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  day_No: String
+
+  """All values that are not equal to given value."""
+  day_No_not: String
+
+  """All values that are contained in given list."""
+  day_No_in: [String!]
+
+  """All values that are not contained in given list."""
+  day_No_not_in: [String!]
+
+  """All values less than the given value."""
+  day_No_lt: String
+
+  """All values less than or equal the given value."""
+  day_No_lte: String
+
+  """All values greater than the given value."""
+  day_No_gt: String
+
+  """All values greater than or equal the given value."""
+  day_No_gte: String
+
+  """All values containing the given string."""
+  day_No_contains: String
+
+  """All values not containing the given string."""
+  day_No_not_contains: String
+
+  """All values starting with the given string."""
+  day_No_starts_with: String
+
+  """All values not starting with the given string."""
+  day_No_not_starts_with: String
+
+  """All values ending with the given string."""
+  day_No_ends_with: String
+
+  """All values not ending with the given string."""
+  day_No_not_ends_with: String
+}
+
+type Schedule_DaySubscriptionPayload {
+  mutation: MutationType!
+  node: Schedule_Day
+  updatedFields: [String!]
+  previousValues: Schedule_DayPreviousValues
+}
+
+input Schedule_DaySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [Schedule_DaySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [Schedule_DaySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [Schedule_DaySubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: Schedule_DayWhereInput
+}
+
+input Schedule_DayUpdateInput {
+  day_No: String
+  schedule_staffs: Schedule_StaffUpdateManyWithoutSchedule_dayInput
+  schedule: ScheduleUpdateOneRequiredWithoutSchedule_daysInput
+  freetimes: FreetimeUpdateManyWithoutSchedule_dayInput
+}
+
+input Schedule_DayUpdateManyDataInput {
+  day_No: String
+}
+
+input Schedule_DayUpdateManyMutationInput {
+  day_No: String
+}
+
+input Schedule_DayUpdateManyWithoutScheduleInput {
+  create: [Schedule_DayCreateWithoutScheduleInput!]
+  connect: [Schedule_DayWhereUniqueInput!]
+  set: [Schedule_DayWhereUniqueInput!]
+  disconnect: [Schedule_DayWhereUniqueInput!]
+  delete: [Schedule_DayWhereUniqueInput!]
+  update: [Schedule_DayUpdateWithWhereUniqueWithoutScheduleInput!]
+  updateMany: [Schedule_DayUpdateManyWithWhereNestedInput!]
+  deleteMany: [Schedule_DayScalarWhereInput!]
+  upsert: [Schedule_DayUpsertWithWhereUniqueWithoutScheduleInput!]
+}
+
+input Schedule_DayUpdateManyWithWhereNestedInput {
+  where: Schedule_DayScalarWhereInput!
+  data: Schedule_DayUpdateManyDataInput!
+}
+
+input Schedule_DayUpdateOneRequiredWithoutSchedule_staffsInput {
+  create: Schedule_DayCreateWithoutSchedule_staffsInput
+  connect: Schedule_DayWhereUniqueInput
+  update: Schedule_DayUpdateWithoutSchedule_staffsDataInput
+  upsert: Schedule_DayUpsertWithoutSchedule_staffsInput
+}
+
+input Schedule_DayUpdateOneWithoutFreetimesInput {
+  create: Schedule_DayCreateWithoutFreetimesInput
+  connect: Schedule_DayWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: Schedule_DayUpdateWithoutFreetimesDataInput
+  upsert: Schedule_DayUpsertWithoutFreetimesInput
+}
+
+input Schedule_DayUpdateWithoutFreetimesDataInput {
+  day_No: String
+  schedule_staffs: Schedule_StaffUpdateManyWithoutSchedule_dayInput
+  schedule: ScheduleUpdateOneRequiredWithoutSchedule_daysInput
+}
+
+input Schedule_DayUpdateWithoutSchedule_staffsDataInput {
+  day_No: String
+  schedule: ScheduleUpdateOneRequiredWithoutSchedule_daysInput
+  freetimes: FreetimeUpdateManyWithoutSchedule_dayInput
+}
+
+input Schedule_DayUpdateWithoutScheduleDataInput {
+  day_No: String
+  schedule_staffs: Schedule_StaffUpdateManyWithoutSchedule_dayInput
+  freetimes: FreetimeUpdateManyWithoutSchedule_dayInput
+}
+
+input Schedule_DayUpdateWithWhereUniqueWithoutScheduleInput {
+  where: Schedule_DayWhereUniqueInput!
+  data: Schedule_DayUpdateWithoutScheduleDataInput!
+}
+
+input Schedule_DayUpsertWithoutFreetimesInput {
+  update: Schedule_DayUpdateWithoutFreetimesDataInput!
+  create: Schedule_DayCreateWithoutFreetimesInput!
+}
+
+input Schedule_DayUpsertWithoutSchedule_staffsInput {
+  update: Schedule_DayUpdateWithoutSchedule_staffsDataInput!
+  create: Schedule_DayCreateWithoutSchedule_staffsInput!
+}
+
+input Schedule_DayUpsertWithWhereUniqueWithoutScheduleInput {
+  where: Schedule_DayWhereUniqueInput!
+  update: Schedule_DayUpdateWithoutScheduleDataInput!
+  create: Schedule_DayCreateWithoutScheduleInput!
+}
+
+input Schedule_DayWhereInput {
+  """Logical AND on all given filters."""
+  AND: [Schedule_DayWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [Schedule_DayWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [Schedule_DayWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  day_No: String
+
+  """All values that are not equal to given value."""
+  day_No_not: String
+
+  """All values that are contained in given list."""
+  day_No_in: [String!]
+
+  """All values that are not contained in given list."""
+  day_No_not_in: [String!]
+
+  """All values less than the given value."""
+  day_No_lt: String
+
+  """All values less than or equal the given value."""
+  day_No_lte: String
+
+  """All values greater than the given value."""
+  day_No_gt: String
+
+  """All values greater than or equal the given value."""
+  day_No_gte: String
+
+  """All values containing the given string."""
+  day_No_contains: String
+
+  """All values not containing the given string."""
+  day_No_not_contains: String
+
+  """All values starting with the given string."""
+  day_No_starts_with: String
+
+  """All values not starting with the given string."""
+  day_No_not_starts_with: String
+
+  """All values ending with the given string."""
+  day_No_ends_with: String
+
+  """All values not ending with the given string."""
+  day_No_not_ends_with: String
+  schedule_staffs_every: Schedule_StaffWhereInput
+  schedule_staffs_some: Schedule_StaffWhereInput
+  schedule_staffs_none: Schedule_StaffWhereInput
+  schedule: ScheduleWhereInput
+  freetimes_every: FreetimeWhereInput
+  freetimes_some: FreetimeWhereInput
+  freetimes_none: FreetimeWhereInput
+}
+
+input Schedule_DayWhereUniqueInput {
+  id: ID
+  day_No: String
+}
+
+type Schedule_Interval implements Node {
+  id: ID!
+  interval_No: String!
+  start: String!
+  end: String!
+}
+
+"""A connection to a list of items."""
+type Schedule_IntervalConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [Schedule_IntervalEdge]!
+  aggregate: AggregateSchedule_Interval!
+}
+
+input Schedule_IntervalCreateInput {
+  id: ID
+  interval_No: String!
+  start: String!
+  end: String!
+}
+
+input Schedule_IntervalCreateOneInput {
+  create: Schedule_IntervalCreateInput
+  connect: Schedule_IntervalWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type Schedule_IntervalEdge {
+  """The item at the end of the edge."""
+  node: Schedule_Interval!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum Schedule_IntervalOrderByInput {
+  id_ASC
+  id_DESC
+  interval_No_ASC
+  interval_No_DESC
+  start_ASC
+  start_DESC
+  end_ASC
+  end_DESC
+}
+
+type Schedule_IntervalPreviousValues {
+  id: ID!
+  interval_No: String!
+  start: String!
+  end: String!
+}
+
+type Schedule_IntervalSubscriptionPayload {
+  mutation: MutationType!
+  node: Schedule_Interval
+  updatedFields: [String!]
+  previousValues: Schedule_IntervalPreviousValues
+}
+
+input Schedule_IntervalSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [Schedule_IntervalSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [Schedule_IntervalSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [Schedule_IntervalSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: Schedule_IntervalWhereInput
+}
+
+input Schedule_IntervalUpdateDataInput {
+  interval_No: String
+  start: String
+  end: String
+}
+
+input Schedule_IntervalUpdateInput {
+  interval_No: String
+  start: String
+  end: String
+}
+
+input Schedule_IntervalUpdateManyMutationInput {
+  interval_No: String
+  start: String
+  end: String
+}
+
+input Schedule_IntervalUpdateOneRequiredInput {
+  create: Schedule_IntervalCreateInput
+  connect: Schedule_IntervalWhereUniqueInput
+  update: Schedule_IntervalUpdateDataInput
+  upsert: Schedule_IntervalUpsertNestedInput
+}
+
+input Schedule_IntervalUpsertNestedInput {
+  update: Schedule_IntervalUpdateDataInput!
+  create: Schedule_IntervalCreateInput!
+}
+
+input Schedule_IntervalWhereInput {
+  """Logical AND on all given filters."""
+  AND: [Schedule_IntervalWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [Schedule_IntervalWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [Schedule_IntervalWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  interval_No: String
+
+  """All values that are not equal to given value."""
+  interval_No_not: String
+
+  """All values that are contained in given list."""
+  interval_No_in: [String!]
+
+  """All values that are not contained in given list."""
+  interval_No_not_in: [String!]
+
+  """All values less than the given value."""
+  interval_No_lt: String
+
+  """All values less than or equal the given value."""
+  interval_No_lte: String
+
+  """All values greater than the given value."""
+  interval_No_gt: String
+
+  """All values greater than or equal the given value."""
+  interval_No_gte: String
+
+  """All values containing the given string."""
+  interval_No_contains: String
+
+  """All values not containing the given string."""
+  interval_No_not_contains: String
+
+  """All values starting with the given string."""
+  interval_No_starts_with: String
+
+  """All values not starting with the given string."""
+  interval_No_not_starts_with: String
+
+  """All values ending with the given string."""
+  interval_No_ends_with: String
+
+  """All values not ending with the given string."""
+  interval_No_not_ends_with: String
+  start: String
+
+  """All values that are not equal to given value."""
+  start_not: String
+
+  """All values that are contained in given list."""
+  start_in: [String!]
+
+  """All values that are not contained in given list."""
+  start_not_in: [String!]
+
+  """All values less than the given value."""
+  start_lt: String
+
+  """All values less than or equal the given value."""
+  start_lte: String
+
+  """All values greater than the given value."""
+  start_gt: String
+
+  """All values greater than or equal the given value."""
+  start_gte: String
+
+  """All values containing the given string."""
+  start_contains: String
+
+  """All values not containing the given string."""
+  start_not_contains: String
+
+  """All values starting with the given string."""
+  start_starts_with: String
+
+  """All values not starting with the given string."""
+  start_not_starts_with: String
+
+  """All values ending with the given string."""
+  start_ends_with: String
+
+  """All values not ending with the given string."""
+  start_not_ends_with: String
+  end: String
+
+  """All values that are not equal to given value."""
+  end_not: String
+
+  """All values that are contained in given list."""
+  end_in: [String!]
+
+  """All values that are not contained in given list."""
+  end_not_in: [String!]
+
+  """All values less than the given value."""
+  end_lt: String
+
+  """All values less than or equal the given value."""
+  end_lte: String
+
+  """All values greater than the given value."""
+  end_gt: String
+
+  """All values greater than or equal the given value."""
+  end_gte: String
+
+  """All values containing the given string."""
+  end_contains: String
+
+  """All values not containing the given string."""
+  end_not_contains: String
+
+  """All values starting with the given string."""
+  end_starts_with: String
+
+  """All values not starting with the given string."""
+  end_not_starts_with: String
+
+  """All values ending with the given string."""
+  end_ends_with: String
+
+  """All values not ending with the given string."""
+  end_not_ends_with: String
+}
+
+input Schedule_IntervalWhereUniqueInput {
+  id: ID
+  interval_No: String
+}
+
+type Schedule_Staff implements Node {
+  id: ID!
+  schedule_day: Schedule_Day!
+  schedule: Schedule!
+  staff: User
+  position: String!
+  schedule_interval: Schedule_Interval!
+}
+
+"""A connection to a list of items."""
+type Schedule_StaffConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [Schedule_StaffEdge]!
+  aggregate: AggregateSchedule_Staff!
+}
+
+input Schedule_StaffCreateInput {
+  id: ID
+  position: String!
+  schedule_day: Schedule_DayCreateOneWithoutSchedule_staffsInput!
+  schedule: ScheduleCreateOneWithoutSchedule_staffsInput!
+  staff: UserCreateOneInput
+  schedule_interval: Schedule_IntervalCreateOneInput!
+}
+
+input Schedule_StaffCreateManyWithoutSchedule_dayInput {
+  create: [Schedule_StaffCreateWithoutSchedule_dayInput!]
+  connect: [Schedule_StaffWhereUniqueInput!]
+}
+
+input Schedule_StaffCreateManyWithoutScheduleInput {
+  create: [Schedule_StaffCreateWithoutScheduleInput!]
+  connect: [Schedule_StaffWhereUniqueInput!]
+}
+
+input Schedule_StaffCreateWithoutSchedule_dayInput {
+  id: ID
+  position: String!
+  schedule: ScheduleCreateOneWithoutSchedule_staffsInput!
+  staff: UserCreateOneInput
+  schedule_interval: Schedule_IntervalCreateOneInput!
+}
+
+input Schedule_StaffCreateWithoutScheduleInput {
+  id: ID
+  position: String!
+  schedule_day: Schedule_DayCreateOneWithoutSchedule_staffsInput!
+  staff: UserCreateOneInput
+  schedule_interval: Schedule_IntervalCreateOneInput!
+}
+
+"""An edge in a connection."""
+type Schedule_StaffEdge {
+  """The item at the end of the edge."""
+  node: Schedule_Staff!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum Schedule_StaffOrderByInput {
+  id_ASC
+  id_DESC
+  position_ASC
+  position_DESC
+}
+
+type Schedule_StaffPreviousValues {
+  id: ID!
+  position: String!
+}
+
+input Schedule_StaffScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [Schedule_StaffScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [Schedule_StaffScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [Schedule_StaffScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  position: String
+
+  """All values that are not equal to given value."""
+  position_not: String
+
+  """All values that are contained in given list."""
+  position_in: [String!]
+
+  """All values that are not contained in given list."""
+  position_not_in: [String!]
+
+  """All values less than the given value."""
+  position_lt: String
+
+  """All values less than or equal the given value."""
+  position_lte: String
+
+  """All values greater than the given value."""
+  position_gt: String
+
+  """All values greater than or equal the given value."""
+  position_gte: String
+
+  """All values containing the given string."""
+  position_contains: String
+
+  """All values not containing the given string."""
+  position_not_contains: String
+
+  """All values starting with the given string."""
+  position_starts_with: String
+
+  """All values not starting with the given string."""
+  position_not_starts_with: String
+
+  """All values ending with the given string."""
+  position_ends_with: String
+
+  """All values not ending with the given string."""
+  position_not_ends_with: String
+}
+
+type Schedule_StaffSubscriptionPayload {
+  mutation: MutationType!
+  node: Schedule_Staff
+  updatedFields: [String!]
+  previousValues: Schedule_StaffPreviousValues
+}
+
+input Schedule_StaffSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [Schedule_StaffSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [Schedule_StaffSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [Schedule_StaffSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: Schedule_StaffWhereInput
+}
+
+input Schedule_StaffUpdateInput {
+  position: String
+  schedule_day: Schedule_DayUpdateOneRequiredWithoutSchedule_staffsInput
+  schedule: ScheduleUpdateOneRequiredWithoutSchedule_staffsInput
+  staff: UserUpdateOneInput
+  schedule_interval: Schedule_IntervalUpdateOneRequiredInput
+}
+
+input Schedule_StaffUpdateManyDataInput {
+  position: String
+}
+
+input Schedule_StaffUpdateManyMutationInput {
+  position: String
+}
+
+input Schedule_StaffUpdateManyWithoutSchedule_dayInput {
+  create: [Schedule_StaffCreateWithoutSchedule_dayInput!]
+  connect: [Schedule_StaffWhereUniqueInput!]
+  set: [Schedule_StaffWhereUniqueInput!]
+  disconnect: [Schedule_StaffWhereUniqueInput!]
+  delete: [Schedule_StaffWhereUniqueInput!]
+  update: [Schedule_StaffUpdateWithWhereUniqueWithoutSchedule_dayInput!]
+  updateMany: [Schedule_StaffUpdateManyWithWhereNestedInput!]
+  deleteMany: [Schedule_StaffScalarWhereInput!]
+  upsert: [Schedule_StaffUpsertWithWhereUniqueWithoutSchedule_dayInput!]
+}
+
+input Schedule_StaffUpdateManyWithoutScheduleInput {
+  create: [Schedule_StaffCreateWithoutScheduleInput!]
+  connect: [Schedule_StaffWhereUniqueInput!]
+  set: [Schedule_StaffWhereUniqueInput!]
+  disconnect: [Schedule_StaffWhereUniqueInput!]
+  delete: [Schedule_StaffWhereUniqueInput!]
+  update: [Schedule_StaffUpdateWithWhereUniqueWithoutScheduleInput!]
+  updateMany: [Schedule_StaffUpdateManyWithWhereNestedInput!]
+  deleteMany: [Schedule_StaffScalarWhereInput!]
+  upsert: [Schedule_StaffUpsertWithWhereUniqueWithoutScheduleInput!]
+}
+
+input Schedule_StaffUpdateManyWithWhereNestedInput {
+  where: Schedule_StaffScalarWhereInput!
+  data: Schedule_StaffUpdateManyDataInput!
+}
+
+input Schedule_StaffUpdateWithoutSchedule_dayDataInput {
+  position: String
+  schedule: ScheduleUpdateOneRequiredWithoutSchedule_staffsInput
+  staff: UserUpdateOneInput
+  schedule_interval: Schedule_IntervalUpdateOneRequiredInput
+}
+
+input Schedule_StaffUpdateWithoutScheduleDataInput {
+  position: String
+  schedule_day: Schedule_DayUpdateOneRequiredWithoutSchedule_staffsInput
+  staff: UserUpdateOneInput
+  schedule_interval: Schedule_IntervalUpdateOneRequiredInput
+}
+
+input Schedule_StaffUpdateWithWhereUniqueWithoutSchedule_dayInput {
+  where: Schedule_StaffWhereUniqueInput!
+  data: Schedule_StaffUpdateWithoutSchedule_dayDataInput!
+}
+
+input Schedule_StaffUpdateWithWhereUniqueWithoutScheduleInput {
+  where: Schedule_StaffWhereUniqueInput!
+  data: Schedule_StaffUpdateWithoutScheduleDataInput!
+}
+
+input Schedule_StaffUpsertWithWhereUniqueWithoutSchedule_dayInput {
+  where: Schedule_StaffWhereUniqueInput!
+  update: Schedule_StaffUpdateWithoutSchedule_dayDataInput!
+  create: Schedule_StaffCreateWithoutSchedule_dayInput!
+}
+
+input Schedule_StaffUpsertWithWhereUniqueWithoutScheduleInput {
+  where: Schedule_StaffWhereUniqueInput!
+  update: Schedule_StaffUpdateWithoutScheduleDataInput!
+  create: Schedule_StaffCreateWithoutScheduleInput!
+}
+
+input Schedule_StaffWhereInput {
+  """Logical AND on all given filters."""
+  AND: [Schedule_StaffWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [Schedule_StaffWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [Schedule_StaffWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  position: String
+
+  """All values that are not equal to given value."""
+  position_not: String
+
+  """All values that are contained in given list."""
+  position_in: [String!]
+
+  """All values that are not contained in given list."""
+  position_not_in: [String!]
+
+  """All values less than the given value."""
+  position_lt: String
+
+  """All values less than or equal the given value."""
+  position_lte: String
+
+  """All values greater than the given value."""
+  position_gt: String
+
+  """All values greater than or equal the given value."""
+  position_gte: String
+
+  """All values containing the given string."""
+  position_contains: String
+
+  """All values not containing the given string."""
+  position_not_contains: String
+
+  """All values starting with the given string."""
+  position_starts_with: String
+
+  """All values not starting with the given string."""
+  position_not_starts_with: String
+
+  """All values ending with the given string."""
+  position_ends_with: String
+
+  """All values not ending with the given string."""
+  position_not_ends_with: String
+  schedule_day: Schedule_DayWhereInput
+  schedule: ScheduleWhereInput
+  staff: UserWhereInput
+  schedule_interval: Schedule_IntervalWhereInput
+}
+
+input Schedule_StaffWhereUniqueInput {
+  id: ID
+}
+
+"""A connection to a list of items."""
+type ScheduleConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ScheduleEdge]!
+  aggregate: AggregateSchedule!
+}
+
+input ScheduleCreateInput {
+  id: ID
+  schedule_No: String!
+  schedule_days: Schedule_DayCreateManyWithoutScheduleInput
+  schedule_staffs: Schedule_StaffCreateManyWithoutScheduleInput
+  freetimes: FreetimeCreateManyWithoutScheduleInput
+}
+
+input ScheduleCreateOneWithoutFreetimesInput {
+  create: ScheduleCreateWithoutFreetimesInput
+  connect: ScheduleWhereUniqueInput
+}
+
+input ScheduleCreateOneWithoutSchedule_daysInput {
+  create: ScheduleCreateWithoutSchedule_daysInput
+  connect: ScheduleWhereUniqueInput
+}
+
+input ScheduleCreateOneWithoutSchedule_staffsInput {
+  create: ScheduleCreateWithoutSchedule_staffsInput
+  connect: ScheduleWhereUniqueInput
+}
+
+input ScheduleCreateWithoutFreetimesInput {
+  id: ID
+  schedule_No: String!
+  schedule_days: Schedule_DayCreateManyWithoutScheduleInput
+  schedule_staffs: Schedule_StaffCreateManyWithoutScheduleInput
+}
+
+input ScheduleCreateWithoutSchedule_daysInput {
+  id: ID
+  schedule_No: String!
+  schedule_staffs: Schedule_StaffCreateManyWithoutScheduleInput
+  freetimes: FreetimeCreateManyWithoutScheduleInput
+}
+
+input ScheduleCreateWithoutSchedule_staffsInput {
+  id: ID
+  schedule_No: String!
+  schedule_days: Schedule_DayCreateManyWithoutScheduleInput
+  freetimes: FreetimeCreateManyWithoutScheduleInput
+}
+
+"""An edge in a connection."""
+type ScheduleEdge {
+  """The item at the end of the edge."""
+  node: Schedule!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ScheduleOrderByInput {
+  id_ASC
+  id_DESC
+  schedule_No_ASC
+  schedule_No_DESC
+}
+
+type SchedulePreviousValues {
+  id: ID!
+  schedule_No: String!
+}
+
+type ScheduleSubscriptionPayload {
+  mutation: MutationType!
+  node: Schedule
+  updatedFields: [String!]
+  previousValues: SchedulePreviousValues
+}
+
+input ScheduleSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ScheduleSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ScheduleSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ScheduleSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ScheduleWhereInput
+}
+
+input ScheduleUpdateInput {
+  schedule_No: String
+  schedule_days: Schedule_DayUpdateManyWithoutScheduleInput
+  schedule_staffs: Schedule_StaffUpdateManyWithoutScheduleInput
+  freetimes: FreetimeUpdateManyWithoutScheduleInput
+}
+
+input ScheduleUpdateManyMutationInput {
+  schedule_No: String
+}
+
+input ScheduleUpdateOneRequiredWithoutSchedule_daysInput {
+  create: ScheduleCreateWithoutSchedule_daysInput
+  connect: ScheduleWhereUniqueInput
+  update: ScheduleUpdateWithoutSchedule_daysDataInput
+  upsert: ScheduleUpsertWithoutSchedule_daysInput
+}
+
+input ScheduleUpdateOneRequiredWithoutSchedule_staffsInput {
+  create: ScheduleCreateWithoutSchedule_staffsInput
+  connect: ScheduleWhereUniqueInput
+  update: ScheduleUpdateWithoutSchedule_staffsDataInput
+  upsert: ScheduleUpsertWithoutSchedule_staffsInput
+}
+
+input ScheduleUpdateOneWithoutFreetimesInput {
+  create: ScheduleCreateWithoutFreetimesInput
+  connect: ScheduleWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: ScheduleUpdateWithoutFreetimesDataInput
+  upsert: ScheduleUpsertWithoutFreetimesInput
+}
+
+input ScheduleUpdateWithoutFreetimesDataInput {
+  schedule_No: String
+  schedule_days: Schedule_DayUpdateManyWithoutScheduleInput
+  schedule_staffs: Schedule_StaffUpdateManyWithoutScheduleInput
+}
+
+input ScheduleUpdateWithoutSchedule_daysDataInput {
+  schedule_No: String
+  schedule_staffs: Schedule_StaffUpdateManyWithoutScheduleInput
+  freetimes: FreetimeUpdateManyWithoutScheduleInput
+}
+
+input ScheduleUpdateWithoutSchedule_staffsDataInput {
+  schedule_No: String
+  schedule_days: Schedule_DayUpdateManyWithoutScheduleInput
+  freetimes: FreetimeUpdateManyWithoutScheduleInput
+}
+
+input ScheduleUpsertWithoutFreetimesInput {
+  update: ScheduleUpdateWithoutFreetimesDataInput!
+  create: ScheduleCreateWithoutFreetimesInput!
+}
+
+input ScheduleUpsertWithoutSchedule_daysInput {
+  update: ScheduleUpdateWithoutSchedule_daysDataInput!
+  create: ScheduleCreateWithoutSchedule_daysInput!
+}
+
+input ScheduleUpsertWithoutSchedule_staffsInput {
+  update: ScheduleUpdateWithoutSchedule_staffsDataInput!
+  create: ScheduleCreateWithoutSchedule_staffsInput!
+}
+
+input ScheduleWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ScheduleWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ScheduleWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ScheduleWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  schedule_No: String
+
+  """All values that are not equal to given value."""
+  schedule_No_not: String
+
+  """All values that are contained in given list."""
+  schedule_No_in: [String!]
+
+  """All values that are not contained in given list."""
+  schedule_No_not_in: [String!]
+
+  """All values less than the given value."""
+  schedule_No_lt: String
+
+  """All values less than or equal the given value."""
+  schedule_No_lte: String
+
+  """All values greater than the given value."""
+  schedule_No_gt: String
+
+  """All values greater than or equal the given value."""
+  schedule_No_gte: String
+
+  """All values containing the given string."""
+  schedule_No_contains: String
+
+  """All values not containing the given string."""
+  schedule_No_not_contains: String
+
+  """All values starting with the given string."""
+  schedule_No_starts_with: String
+
+  """All values not starting with the given string."""
+  schedule_No_not_starts_with: String
+
+  """All values ending with the given string."""
+  schedule_No_ends_with: String
+
+  """All values not ending with the given string."""
+  schedule_No_not_ends_with: String
+  schedule_days_every: Schedule_DayWhereInput
+  schedule_days_some: Schedule_DayWhereInput
+  schedule_days_none: Schedule_DayWhereInput
+  schedule_staffs_every: Schedule_StaffWhereInput
+  schedule_staffs_some: Schedule_StaffWhereInput
+  schedule_staffs_none: Schedule_StaffWhereInput
+  freetimes_every: FreetimeWhereInput
+  freetimes_some: FreetimeWhereInput
+  freetimes_none: FreetimeWhereInput
+}
+
+input ScheduleWhereUniqueInput {
+  id: ID
+  schedule_No: String
+}
+
+type Subscription {
+  schedule(where: ScheduleSubscriptionWhereInput): ScheduleSubscriptionPayload
+  freetime(where: FreetimeSubscriptionWhereInput): FreetimeSubscriptionPayload
+  schedule_Day(where: Schedule_DaySubscriptionWhereInput): Schedule_DaySubscriptionPayload
+  schedule_Staff(where: Schedule_StaffSubscriptionWhereInput): Schedule_StaffSubscriptionPayload
+  item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  schedule_Interval(where: Schedule_IntervalSubscriptionWhereInput): Schedule_IntervalSubscriptionPayload
+}
+
+type User implements Node {
+  id: ID!
+  accountType: String!
+  employeeId: String!
+  name: String!
+  password: String!
+  sex: String!
+  position: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  useDefaultFreetime: Boolean
+  freetimes(where: FreetimeWhereInput, orderBy: FreetimeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Freetime!]
+  hireDate: String!
+  permanentStaff: Boolean!
+  lastLogin: String
+  loginTime: String
+}
+
+"""A connection to a list of items."""
+type UserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  id: ID
+  accountType: String!
+  employeeId: String!
+  name: String!
+  password: String!
+  sex: String!
+  position: String
+  useDefaultFreetime: Boolean
+  hireDate: String!
+  permanentStaff: Boolean!
+  lastLogin: String
+  loginTime: String
+  freetimes: FreetimeCreateManyWithoutStaffInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutFreetimesInput {
+  create: UserCreateWithoutFreetimesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutFreetimesInput {
+  id: ID
+  accountType: String!
+  employeeId: String!
+  name: String!
+  password: String!
+  sex: String!
+  position: String
+  useDefaultFreetime: Boolean
+  hireDate: String!
+  permanentStaff: Boolean!
+  lastLogin: String
+  loginTime: String
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """The item at the end of the edge."""
+  node: User!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  accountType_ASC
+  accountType_DESC
+  employeeId_ASC
+  employeeId_DESC
+  name_ASC
+  name_DESC
+  password_ASC
+  password_DESC
+  sex_ASC
+  sex_DESC
+  position_ASC
+  position_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  useDefaultFreetime_ASC
+  useDefaultFreetime_DESC
+  hireDate_ASC
+  hireDate_DESC
+  permanentStaff_ASC
+  permanentStaff_DESC
+  lastLogin_ASC
+  lastLogin_DESC
+  loginTime_ASC
+  loginTime_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  accountType: String!
+  employeeId: String!
+  name: String!
+  password: String!
+  sex: String!
+  position: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  useDefaultFreetime: Boolean
+  hireDate: String!
+  permanentStaff: Boolean!
+  lastLogin: String
+  loginTime: String
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+}
+
+input UserUpdateDataInput {
+  accountType: String
+  employeeId: String
+  name: String
+  password: String
+  sex: String
+  position: String
+  useDefaultFreetime: Boolean
+  hireDate: String
+  permanentStaff: Boolean
+  lastLogin: String
+  loginTime: String
+  freetimes: FreetimeUpdateManyWithoutStaffInput
+}
+
+input UserUpdateInput {
+  accountType: String
+  employeeId: String
+  name: String
+  password: String
+  sex: String
+  position: String
+  useDefaultFreetime: Boolean
+  hireDate: String
+  permanentStaff: Boolean
+  lastLogin: String
+  loginTime: String
+  freetimes: FreetimeUpdateManyWithoutStaffInput
+}
+
+input UserUpdateManyMutationInput {
+  accountType: String
+  employeeId: String
+  name: String
+  password: String
+  sex: String
+  position: String
+  useDefaultFreetime: Boolean
+  hireDate: String
+  permanentStaff: Boolean
+  lastLogin: String
+  loginTime: String
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
+input UserUpdateOneRequiredWithoutFreetimesInput {
+  create: UserCreateWithoutFreetimesInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutFreetimesDataInput
+  upsert: UserUpsertWithoutFreetimesInput
+}
+
+input UserUpdateWithoutFreetimesDataInput {
+  accountType: String
+  employeeId: String
+  name: String
+  password: String
+  sex: String
+  position: String
+  useDefaultFreetime: Boolean
+  hireDate: String
+  permanentStaff: Boolean
+  lastLogin: String
+  loginTime: String
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithoutFreetimesInput {
+  update: UserUpdateWithoutFreetimesDataInput!
+  create: UserCreateWithoutFreetimesInput!
+}
+
+input UserWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  accountType: String
+
+  """All values that are not equal to given value."""
+  accountType_not: String
+
+  """All values that are contained in given list."""
+  accountType_in: [String!]
+
+  """All values that are not contained in given list."""
+  accountType_not_in: [String!]
+
+  """All values less than the given value."""
+  accountType_lt: String
+
+  """All values less than or equal the given value."""
+  accountType_lte: String
+
+  """All values greater than the given value."""
+  accountType_gt: String
+
+  """All values greater than or equal the given value."""
+  accountType_gte: String
+
+  """All values containing the given string."""
+  accountType_contains: String
+
+  """All values not containing the given string."""
+  accountType_not_contains: String
+
+  """All values starting with the given string."""
+  accountType_starts_with: String
+
+  """All values not starting with the given string."""
+  accountType_not_starts_with: String
+
+  """All values ending with the given string."""
+  accountType_ends_with: String
+
+  """All values not ending with the given string."""
+  accountType_not_ends_with: String
+  employeeId: String
+
+  """All values that are not equal to given value."""
+  employeeId_not: String
+
+  """All values that are contained in given list."""
+  employeeId_in: [String!]
+
+  """All values that are not contained in given list."""
+  employeeId_not_in: [String!]
+
+  """All values less than the given value."""
+  employeeId_lt: String
+
+  """All values less than or equal the given value."""
+  employeeId_lte: String
+
+  """All values greater than the given value."""
+  employeeId_gt: String
+
+  """All values greater than or equal the given value."""
+  employeeId_gte: String
+
+  """All values containing the given string."""
+  employeeId_contains: String
+
+  """All values not containing the given string."""
+  employeeId_not_contains: String
+
+  """All values starting with the given string."""
+  employeeId_starts_with: String
+
+  """All values not starting with the given string."""
+  employeeId_not_starts_with: String
+
+  """All values ending with the given string."""
+  employeeId_ends_with: String
+
+  """All values not ending with the given string."""
+  employeeId_not_ends_with: String
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  sex: String
+
+  """All values that are not equal to given value."""
+  sex_not: String
+
+  """All values that are contained in given list."""
+  sex_in: [String!]
+
+  """All values that are not contained in given list."""
+  sex_not_in: [String!]
+
+  """All values less than the given value."""
+  sex_lt: String
+
+  """All values less than or equal the given value."""
+  sex_lte: String
+
+  """All values greater than the given value."""
+  sex_gt: String
+
+  """All values greater than or equal the given value."""
+  sex_gte: String
+
+  """All values containing the given string."""
+  sex_contains: String
+
+  """All values not containing the given string."""
+  sex_not_contains: String
+
+  """All values starting with the given string."""
+  sex_starts_with: String
+
+  """All values not starting with the given string."""
+  sex_not_starts_with: String
+
+  """All values ending with the given string."""
+  sex_ends_with: String
+
+  """All values not ending with the given string."""
+  sex_not_ends_with: String
+  position: String
+
+  """All values that are not equal to given value."""
+  position_not: String
+
+  """All values that are contained in given list."""
+  position_in: [String!]
+
+  """All values that are not contained in given list."""
+  position_not_in: [String!]
+
+  """All values less than the given value."""
+  position_lt: String
+
+  """All values less than or equal the given value."""
+  position_lte: String
+
+  """All values greater than the given value."""
+  position_gt: String
+
+  """All values greater than or equal the given value."""
+  position_gte: String
+
+  """All values containing the given string."""
+  position_contains: String
+
+  """All values not containing the given string."""
+  position_not_contains: String
+
+  """All values starting with the given string."""
+  position_starts_with: String
+
+  """All values not starting with the given string."""
+  position_not_starts_with: String
+
+  """All values ending with the given string."""
+  position_ends_with: String
+
+  """All values not ending with the given string."""
+  position_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  useDefaultFreetime: Boolean
+
+  """All values that are not equal to given value."""
+  useDefaultFreetime_not: Boolean
+  hireDate: String
+
+  """All values that are not equal to given value."""
+  hireDate_not: String
+
+  """All values that are contained in given list."""
+  hireDate_in: [String!]
+
+  """All values that are not contained in given list."""
+  hireDate_not_in: [String!]
+
+  """All values less than the given value."""
+  hireDate_lt: String
+
+  """All values less than or equal the given value."""
+  hireDate_lte: String
+
+  """All values greater than the given value."""
+  hireDate_gt: String
+
+  """All values greater than or equal the given value."""
+  hireDate_gte: String
+
+  """All values containing the given string."""
+  hireDate_contains: String
+
+  """All values not containing the given string."""
+  hireDate_not_contains: String
+
+  """All values starting with the given string."""
+  hireDate_starts_with: String
+
+  """All values not starting with the given string."""
+  hireDate_not_starts_with: String
+
+  """All values ending with the given string."""
+  hireDate_ends_with: String
+
+  """All values not ending with the given string."""
+  hireDate_not_ends_with: String
+  permanentStaff: Boolean
+
+  """All values that are not equal to given value."""
+  permanentStaff_not: Boolean
+  lastLogin: String
+
+  """All values that are not equal to given value."""
+  lastLogin_not: String
+
+  """All values that are contained in given list."""
+  lastLogin_in: [String!]
+
+  """All values that are not contained in given list."""
+  lastLogin_not_in: [String!]
+
+  """All values less than the given value."""
+  lastLogin_lt: String
+
+  """All values less than or equal the given value."""
+  lastLogin_lte: String
+
+  """All values greater than the given value."""
+  lastLogin_gt: String
+
+  """All values greater than or equal the given value."""
+  lastLogin_gte: String
+
+  """All values containing the given string."""
+  lastLogin_contains: String
+
+  """All values not containing the given string."""
+  lastLogin_not_contains: String
+
+  """All values starting with the given string."""
+  lastLogin_starts_with: String
+
+  """All values not starting with the given string."""
+  lastLogin_not_starts_with: String
+
+  """All values ending with the given string."""
+  lastLogin_ends_with: String
+
+  """All values not ending with the given string."""
+  lastLogin_not_ends_with: String
+  loginTime: String
+
+  """All values that are not equal to given value."""
+  loginTime_not: String
+
+  """All values that are contained in given list."""
+  loginTime_in: [String!]
+
+  """All values that are not contained in given list."""
+  loginTime_not_in: [String!]
+
+  """All values less than the given value."""
+  loginTime_lt: String
+
+  """All values less than or equal the given value."""
+  loginTime_lte: String
+
+  """All values greater than the given value."""
+  loginTime_gt: String
+
+  """All values greater than or equal the given value."""
+  loginTime_gte: String
+
+  """All values containing the given string."""
+  loginTime_contains: String
+
+  """All values not containing the given string."""
+  loginTime_not_contains: String
+
+  """All values starting with the given string."""
+  loginTime_starts_with: String
+
+  """All values not starting with the given string."""
+  loginTime_not_starts_with: String
+
+  """All values ending with the given string."""
+  loginTime_ends_with: String
+
+  """All values not ending with the given string."""
+  loginTime_not_ends_with: String
+  freetimes_every: FreetimeWhereInput
+  freetimes_some: FreetimeWhereInput
+  freetimes_none: FreetimeWhereInput
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  employeeId: String
+}

@@ -1,0 +1,77 @@
+.freetimeForm__container {
+    width: fit-content;
+    margin-top: 2.4rem;
+}
+
+.freetimeForm__panel {
+    width: 64.5rem;
+    margin: auto 1rem;
+    // margin-top: -2.5rem;
+}
+
+.freetimeForm__panel h6 {
+    display: inline-block;
+    margin: 0 0 1rem 1rem;
+}
+
+.freetimeForm_No {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 2rem;
+}
+
+.freetimeForm__panelTitle {
+    display: flex;
+    margin: auto 5px;
+}
+
+.freetimeForm__panelTitle h5 {
+    display: inline-block;
+    width: $xxl-size;
+    text-align: center;
+    margin: auto 0.5rem;
+}
+
+.freetimeForm__panelItem {
+    display: flex;
+    margin: auto 5px;
+    flex-wrap: wrap;
+}
+  
+.freetimeForm__footer {
+    display: flex;
+    justify-content: flex-end;
+    margin: $s-size 2.5rem;
+}
+
+.freetimeForm__footer Button {
+    margin-left: $s-size;
+}
+
+.freetime__btn {
+    // color: #8685856e;
+    font-size: $l-size;
+    width: $xxl-size;
+    height: $xxl-size;
+    margin: 0.8rem 0.5rem;
+}
+
+.freetimeTallyClerk__date {
+    display: inline-block;
+    font-size: $l-size;
+    text-align: center;
+    color: #b3b3b34b;
+    position: absolute;
+    width: $xxl-size;
+    height: $xxl-size;
+    margin: 0.8rem 0.6rem;   
+}
+
+.freetimeTallyClerk__btn {
+    opacity: 0.85;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-shadow: rgb(255, 255, 255) 0 0 15px;
+}
+
+

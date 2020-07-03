@@ -1,0 +1,170 @@
+# import UserOrderByInput FreetimeOrderByInput Schedule_DayOrderByInput ItemOrderByInput from './generated/prisma.graphql'
+
+type Query {
+  users(query: String, orderBy: UserOrderByInput): [User]
+  me: User
+  freetimes(schedule_No: String!, orderBy: FreetimeOrderByInput): [Freetime]
+  myFreetimes(schedule_No: String!): [Freetime]
+  schedule(schedule_No: String!): Schedule
+  mySchedule(schedule_No: String!): [Schedule_Staff]
+  items(category: String, orderBy: ItemOrderByInput): [Item]
+}
+
+type Mutation {
+  createUser(auth: String!, data: CreateUserInput!): User
+  updateUser(employeeId: String!, data: UpdateUserInput!): User
+  deleteUser(employeeId: String!): User
+  changePassword(employeeId: String!, data: ChangePasswordInput!): User
+  login(data: LoginInput!): AuthPayload
+
+  createFreetimes(schedule_No: String!): Aggregate
+  updateFreetime(id: ID, data: updateFreetimeInput): Freetime
+  deleteFreetimes(schedule_No: String!): Aggregate
+
+  createSchedule(schedule_No: String!): Aggregate
+  createSchedule_Day_Batch(schedule_No: String!): Aggregate
+
+  updateSchedule_Staffs(oldStaffs: [UpdateSchedule_StaffsInput], newStaffs: [UpdateSchedule_StaffsInput]): Aggregate
+  deleteSchedule_Staffs(schedule_No: String!): Aggregate
+
+  createItem(auth: String!, data: CreateItemInput!): Item
+  updateItem(id: ID!, data: UpdateItemInput!): Item
+  deleteItem(id: ID!): Item
+}
+
+type Aggregate {
+  count: Int!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+input CreateUserInput {
+  accountType: String!
+  employeeId: String!
+  sex: String!
+  position: String!
+  name: String!
+  password: String!
+  hireDate: String!
+  permanentStaff: Boolean!
+}
+
+input UpdateUserInput {
+  accountType: String
+  employeeId: String
+  sex: String
+  position: String
+  name: String
+  password: String
+  useDefaultFreetime: Boolean
+  hireDate: String
+  permanentStaff: Boolean
+}
+
+input ChangePasswordInput {
+  currentPassword: String!
+  password: String!
+}
+
+
+input updateFreetimeInput {
+  availability: String
+  useDefault: Boolean
+}
+
+input UpdateSchedule_StaffsInput {
+  id: ID
+  day_No: String
+  employeeId: String
+  position: String
+  interval_No: String
+}
+
+input CreateItemInput {
+  description_en: String!
+  description_cn: String!
+  popularity: Int!
+  category: String!
+}
+
+input UpdateItemInput {
+  description_en: String
+  description_cn: String
+  popularity: Int
+  category: String!
+}
+
+type User {
+  id: ID!
+  accountType: String!
+  employeeId: String!
+  name: String!
+  sex: String!
+  position: String
+  password: String!
+  useDefaultFreetime: Boolean
+  hireDate: String!
+  permanentStaff: Boolean!
+  lastLogin: String
+  loginTime: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+input LoginInput {
+  employeeId: String!
+  password: String!
+}
+
+type Schedule {
+  id: ID!
+  schedule_No: String!
+  schedule_days: [Schedule_Day!]!
+  schedule_staffs: [Schedule_Staff!]!
+  freetimes: [Freetime!]! 
+}
+
+type Freetime {
+  id: ID!
+  availability: String!
+  staff: User!
+  schedule: Schedule!
+  schedule_day: Schedule_Day
+  updatedAt: String!
+  createdAt: String!
+}
+
+type Schedule_Day {
+  id: ID!
+  day_No: String!
+  schedule_staffs: [Schedule_Staff!]!
+  schedule: Schedule!
+  freetimes: [Freetime]
+}
+
+type Schedule_Staff {
+  id: ID!
+  schedule_day: Schedule_Day!
+  schedule: Schedule!
+  staff: User
+  position: String!
+  schedule_interval: Schedule_Interval!
+}
+
+type Schedule_Interval {
+  id: ID!
+  interval_No: String!
+  start: String!
+  end: String!
+}
+
+type Item {
+  id: ID!
+  description_en: String!
+  description_cn: String!
+  popularity: Int!
+  category: String!
+}

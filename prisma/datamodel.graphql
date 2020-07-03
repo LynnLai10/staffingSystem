@@ -1,0 +1,67 @@
+type User {
+  id: ID! @id
+  accountType: String!
+  employeeId: String! @unique
+  name: String!
+  password: String!
+  sex: String!
+  position: String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  useDefaultFreetime: Boolean
+  freetimes: [Freetime!]! @relation(name: "FreetimeToUser", onDelete: CASCADE)
+  hireDate: String!
+  permanentStaff: Boolean!
+  lastLogin: String
+  loginTime: String
+}
+
+type Schedule {
+  id: ID! @id
+  schedule_No: String! @unique
+  schedule_days: [Schedule_Day!]! @relation(name: "Schedule_DayToSchedule", onDelete: CASCADE)
+  schedule_staffs: [Schedule_Staff!]! @relation(name: "Schedule_StaffToSchedule", onDelete: CASCADE)
+  freetimes: [Freetime] 
+}
+
+type Freetime {
+  id: ID! @id
+  availability: String!
+  staff: User! @relation(name: "FreetimeToUser", onDelete: SET_NULL)
+  schedule: Schedule
+  schedule_day: Schedule_Day
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Schedule_Day {
+  id: ID! @id
+  day_No: String! @unique
+  schedule_staffs: [Schedule_Staff!]! @relation(name: "Schedule_StaffToSchedule_Day", onDelete: CASCADE)
+  schedule: Schedule! @relation(name: "Schedule_DayToSchedule", onDelete: SET_NULL)
+  freetimes: [Freetime]
+}
+
+type Schedule_Staff {
+  id: ID! @id
+  schedule_day: Schedule_Day! @relation(name: "Schedule_StaffToSchedule_Day", onDelete: SET_NULL)
+  schedule: Schedule! @relation(name: "Schedule_StaffToSchedule", onDelete: SET_NULL)
+  staff: User
+  position: String!
+  schedule_interval: Schedule_Interval! 
+}
+
+type Schedule_Interval {
+  id: ID! @id
+  interval_No: String! @unique
+  start: String!
+  end: String!
+}
+
+type Item {
+  id: ID! @id
+  description_en: String!
+  description_cn: String!
+  popularity: Int!
+  category: String!
+}

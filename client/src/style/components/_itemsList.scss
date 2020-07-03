@@ -1,0 +1,21 @@
+.itemsList__panel {
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.itemsList_description {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.itemsList_description :first-child {
+  display: inline-block;
+  border-bottom: solid 1px;
+  margin-bottom: 0.2rem;
+}
+
+.itemsList__btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
