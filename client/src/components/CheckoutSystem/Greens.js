@@ -1,12 +1,8 @@
 import React from "react";
+import ItemsList from "./ItemsList";
 
-const Greens = () => {
-  return (
-    <div>
-      Greens
-      <img src="../../img/rice.jpeg" height="200" alt="rice" />
-    </div>
-  );
-};
+const Greens = () => (
+  <ItemsList category="greens" />
+)
 
 export default Greens;

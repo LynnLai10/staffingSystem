@@ -53,13 +53,15 @@ class ItemFormModal extends React.Component {
       formValue: {
         description_en: "",
         description_cn: "",
-        popularity: 2,
+        popularity: 3,
         category: this.props.category,
       },
       formError: {},
       show: false,
       id: "",
-      uploadFile: this.props.isEdit ? [{filekey: 1, url: this.props.imgURL}] : []
+      uploadFile: this.props.isEdit
+        ? [{ filekey: 1, url: this.props.imgURL }]
+        : [],
     };
     this.state = Object.assign({}, this.initialState);
   }
@@ -104,7 +106,7 @@ class ItemFormModal extends React.Component {
   };
   //uplaod function
   handleUploaderChange = (value) => {
-    console.log(value)
+    console.log(value);
     this.setState({ uploadFile: value });
   };
   handleReupload = (file) => {
@@ -147,22 +149,40 @@ class ItemFormModal extends React.Component {
                       >
                         <CustomField
                           name="description_en"
-                          label="Description in English"
+                          label={`${
+                            category === "rice" ? "Brand Name" : "Description"
+                          } in English`}
                           error={formError.description_en}
                         />
                         <CustomField
                           name="description_cn"
-                          label="Description in Chinese"
+                          label={`${
+                            category === "rice" ? "Brand Name" : "Description"
+                          } in Chinese`}
                           error={formError.description_cn}
                         />
                         <CustomField
                           name="popularity"
                           label="Popularity"
                           accepter={Slider}
-                          min={0}
-                          max={2}
-                          style={{ width: 100 }}
-                          error={formError.popularity}
+                          min={1}
+                          setp={1}
+                          max={5}
+                          graduated
+                          progress
+                          renderMark={(mark) => {
+                            switch (mark) {
+                              case 5:
+                                return "High";
+                              case 3:
+                                return "Middle";
+                              case 1:
+                                return "Low";
+                              default:
+                                return "";
+                            }
+                          }}
+                          className="itemFormModal___slider"
                         ></CustomField>
                         <div>
                           <Uploader

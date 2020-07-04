@@ -134,7 +134,8 @@ const Query = {
     return prisma.query.items({
       where: {
         category: args.category
-      }
+      },
+      orderBy: args.orderBy
     }, info)
   }
 };

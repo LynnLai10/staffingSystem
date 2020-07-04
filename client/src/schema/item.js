@@ -23,8 +23,8 @@ const inputTemplate = `
 
 //-------------------------------------------------------------------
 const schema_items_content =`
-  query Items ($category: String!){
-    items(category: $category) {` +
+  query Items ($category: String! $orderBy: String){
+    items(category: $category orderBy: $orderBy) {` +
   dataTemplate +
   `}
   }
