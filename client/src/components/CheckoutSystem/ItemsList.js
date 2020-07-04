@@ -43,6 +43,7 @@ class ItemsList extends React.Component {
               <FlexboxGrid>
                 {data.items.map((item) => {
                   const { id, description_en, description_cn } = item;
+                  const imgURL = `../../img/checkout/${category}/${id}.jpg`
                   return (
                     <FlexboxGrid.Item key={id}>
                       <Panel
@@ -52,7 +53,7 @@ class ItemsList extends React.Component {
                         className="itemsList__panel"
                       >
                         <img
-                          src={`../../img/${id}.jpg`}
+                          src={imgURL}
                           height="200"
                           alt="rice"
                         />
@@ -66,6 +67,7 @@ class ItemsList extends React.Component {
                               category={category}
                               isEdit
                               data={item}
+                              imgURL={imgURL}
                             />
                             <DeleteItem category={category} data={item} />
                           </ButtonGroup>

@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios'
 import { Mutation } from "@apollo/react-components";
 import { schema_deleteItem, schema_items } from "../../schema/item";
 import { Modal, Button, Icon, IconButton, Alert } from "rsuite";
@@ -17,14 +18,18 @@ class DeleteItem extends React.Component {
     this.setState({ show: true });
   };
   handleSubmit = (deleteItem) => {
+    const { id } = this.props.data
+    const { category } = this.props
     deleteItem({
       variables: {
-        id: this.props.data.id,
+        id,
       },
       refetchQueries: [
-        { query: schema_items, variables: { category: this.props.category } },
+        { query: schema_items, variables: { category } },
       ],
     });
+    //delete img.jpg at public/img
+    axios.delete(`/checkout/delete/${category}/${id}`)
   };
   render() {
     const { show } = this.state;
@@ -70,6 +75,7 @@ class DeleteItem extends React.Component {
                         this.handleSubmit(deleteItem);
                         this.close();
                       }}
+                      href=""
                       appearance="primary"
                     >
                       Delete

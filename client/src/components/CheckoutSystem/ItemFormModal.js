@@ -59,7 +59,7 @@ class ItemFormModal extends React.Component {
       formError: {},
       show: false,
       id: "",
-      uploadFile: this.props.isEdit ? [{filekey: 1, url: `../../img/${this.props.data.id}.jpg`}] : []
+      uploadFile: this.props.isEdit ? [{filekey: 1, url: this.props.imgURL}] : []
     };
     this.state = Object.assign({}, this.initialState);
   }
@@ -111,7 +111,7 @@ class ItemFormModal extends React.Component {
     this.uploader.start(file);
   };
   render() {
-    const { isEdit } = this.props;
+    const { isEdit, category } = this.props;
     const { formValue, show, formError, uploadFile } = this.state;
     const schema = isEdit ? schema_updateItem : schema_createItem;
     return (
@@ -167,8 +167,8 @@ class ItemFormModal extends React.Component {
                         <div>
                           <Uploader
                             autoUpload={false}
-                            action="/checkout/rice"
-                            name="rice"
+                            action={`/checkout/${category}`}
+                            name="checkout"
                             onChange={this.handleUploaderChange}
                             data={{
                               id: isEdit
