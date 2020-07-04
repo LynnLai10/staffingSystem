@@ -404,6 +404,12 @@ const Mutation = {
       "{ accountType }"
     );
     if (user.accountType === "Admin") {
+      const isExist = await prisma.exists.Item({
+        description_en: args.data.description_en
+      })
+      if (isExist) {
+        throw new Error("description taken!");
+      }
       return prisma.mutation.createItem({
         data: args.data
       });

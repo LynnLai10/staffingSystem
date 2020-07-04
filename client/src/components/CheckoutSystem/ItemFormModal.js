@@ -17,6 +17,7 @@ import {
   Schema,
   IconButton,
   Icon,
+  Loader,
   Alert,
   Uploader,
 } from "rsuite";
@@ -64,7 +65,7 @@ class ItemFormModal extends React.Component {
   }
   //modal function
   close = () => {
-    this.setState({ show: false });
+    this.setState(this.initialState);
   };
   open = () => {
     this.setState({ show: true });
@@ -98,9 +99,7 @@ class ItemFormModal extends React.Component {
         refetchQueries: [
           { query: schema_items, variables: { category: this.props.category } },
         ],
-      });
-
-      this.close();
+      }).then(() => {});
     }
   };
   //uplaod function
@@ -114,26 +113,26 @@ class ItemFormModal extends React.Component {
     const { isEdit } = this.props;
     const { formValue, show, formError } = this.state;
     const schema = isEdit ? schema_updateItem : schema_createItem;
-    console.log(this.uploader)
     return (
       <div>
-        <Mutation
-          mutation={schema}
-          onCompleted={() => {
-            console.log(this.uploader)
-            Alert.success("Success.");
-            this.setState(this.initialState);
-          }}
-        >
-          {(mutate, { data }) => {
-            console.log(data);
-            return (
-              <div>
-                {show && (
-                  <Modal show={show} onHide={this.close} size="xs">
+        {show && (
+          <Modal show={show} onHide={this.close} size="xs">
+            <Mutation
+              mutation={schema}
+              onCompleted={() => {
+                //uploader must execute before modal closed
+                this.uploader.start();
+                this.close();
+                Alert.success("Success.");
+              }}
+            >
+              {(mutate, { loading, error, data }) => {
+                return (
+                  <div>
                     <Modal.Header>
                       <Modal.Title>{isEdit ? "Edit" : "New"} Item</Modal.Title>
                     </Modal.Header>
+
                     <Modal.Body>
                       <Form
                         fluid
@@ -170,7 +169,12 @@ class ItemFormModal extends React.Component {
                             action="/checkout/rice"
                             name="rice"
                             onChange={this.handleUploaderChange}
-                            data={ data && { id: data.createItem.id }}
+                            data={{ description_en: formValue.description_en,
+                            id: data && data.createItem.id }}
+                            accept="image/*"
+                            listType="picture"
+                            multiple={false}
+                            disabled={this.state.value.length === 1}
                             ref={(ref) => {
                               this.uploader = ref;
                             }}
@@ -185,6 +189,7 @@ class ItemFormModal extends React.Component {
                           this.handleSubmit(mutate);
                         }}
                         type="submit"
+                        disabled={!this.state.value.length}
                       >
                         Confirm
                       </Button>
@@ -192,12 +197,22 @@ class ItemFormModal extends React.Component {
                         Cancel
                       </Button>
                     </Modal.Footer>
-                  </Modal>
-                )}
-              </div>
-            );
-          }}
-        </Mutation>
+                    {loading && (
+                      <Loader
+                        backdrop
+                        center
+                        size="md"
+                        content={`Saving...`}
+                        vertical
+                      />
+                    )}
+                    {error && Alert.error("Failed. Please try again.")}
+                  </div>
+                );
+              }}
+            </Mutation>
+          </Modal>
+        )}
         {isEdit ? (
           <IconButton
             appearance="subtle"
@@ -216,5 +231,3 @@ class ItemFormModal extends React.Component {
 }
 
 export default ItemFormModal;
-
-//disabled={!this.state.value.length}

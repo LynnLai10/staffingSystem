@@ -49,11 +49,10 @@ class ItemsList extends React.Component {
                         shaded
                         bordered
                         bodyFill
-                        style={{ display: "inline-block", width: 220 }}
                         className="itemsList__panel"
                       >
                         <img
-                          src='img/rice.jpeg'
+                          src={`../../img/${id}.jpeg`}
                           height="200"
                           alt="rice"
                         />
