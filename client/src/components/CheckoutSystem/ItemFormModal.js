@@ -59,7 +59,7 @@ class ItemFormModal extends React.Component {
       formError: {},
       show: false,
       id: "",
-      value: [],
+      uploadFile: this.props.isEdit ? [{filekey: 1, url: `../../img/${this.props.data.id}.jpg`}] : []
     };
     this.state = Object.assign({}, this.initialState);
   }
@@ -104,14 +104,15 @@ class ItemFormModal extends React.Component {
   };
   //uplaod function
   handleUploaderChange = (value) => {
-    this.setState({ value });
+    console.log(value)
+    this.setState({ uploadFile: value });
   };
   handleReupload = (file) => {
     this.uploader.start(file);
   };
   render() {
     const { isEdit } = this.props;
-    const { formValue, show, formError } = this.state;
+    const { formValue, show, formError, uploadFile } = this.state;
     const schema = isEdit ? schema_updateItem : schema_createItem;
     return (
       <div>
@@ -169,12 +170,16 @@ class ItemFormModal extends React.Component {
                             action="/checkout/rice"
                             name="rice"
                             onChange={this.handleUploaderChange}
-                            data={{ description_en: formValue.description_en,
-                            id: data && data.createItem.id }}
+                            data={{
+                              id: isEdit
+                                ? this.props.data.id
+                                : data && data.createItem.id,
+                            }}
+                            defaultFileList={uploadFile}
                             accept="image/*"
                             listType="picture"
                             multiple={false}
-                            disabled={this.state.value.length === 1}
+                            disabled={uploadFile.length === 1}
                             ref={(ref) => {
                               this.uploader = ref;
                             }}
@@ -189,7 +194,7 @@ class ItemFormModal extends React.Component {
                           this.handleSubmit(mutate);
                         }}
                         type="submit"
-                        disabled={!this.state.value.length}
+                        disabled={!uploadFile.length}
                       >
                         Confirm
                       </Button>

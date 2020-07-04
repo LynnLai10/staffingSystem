@@ -52,7 +52,7 @@ class ItemsList extends React.Component {
                         className="itemsList__panel"
                       >
                         <img
-                          src={`../../img/${id}.jpeg`}
+                          src={`../../img/${id}.jpg`}
                           height="200"
                           alt="rice"
                         />

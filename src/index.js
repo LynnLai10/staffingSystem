@@ -1,7 +1,6 @@
 import "@babel/polyfill/noConflict";
 import server from "./graphqlServer";
 import multer from "multer";
-import prisma from "./prisma";
 const fs = require("fs");
 const path = require("path");
 
@@ -18,13 +17,14 @@ server.express.post(
   async (req, res) => {
     const imgPath = path.join(__dirname, "../client/public/img");
     const oldPath = path.join(imgPath, req.file.filename);
-    const newPath = path.join(imgPath, `${req.body.id}.${req.file.originalname.split('.')[1]}`);
+    const newPath = path.join(imgPath, `${req.body.id}.jpg`);
     fs.rename(oldPath, newPath, (err) => {
       if (err) throw err;
     });
     res.send();
   }
 );
+
 server.express.post(
   "/checkout/greens",
   upload.single("greens"),
