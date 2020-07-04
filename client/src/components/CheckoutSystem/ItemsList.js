@@ -18,7 +18,7 @@ class ItemsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "popularity_DESC",
+      // value: "popularity_DESC",
       sortList: [
         {
           label: "Popularity",
@@ -37,10 +37,21 @@ class ItemsList extends React.Component {
           value: "description_en_ASC",
         },
       ],
+      variables: {
+        category: `${this.props.category}`,
+        orderBy: "popularity_DESC",
+      }
     };
   }
   handleChange = (value) => {
-    this.setState({ value });
+    console.log(value)
+    this.setState((prevState) => ({
+      variables: {
+        ...prevState.variables,
+        orderBy: value ? value : 'id_ASC'
+      }
+    }));
+    console.log(this.state.variables)
   };
   renderItem = (item) => {
     return (
@@ -48,7 +59,7 @@ class ItemsList extends React.Component {
         {item.label}{" "}
         <i
           className={`rs-icon rs-icon-arrow-circle-${
-            item.value.split("_")[1] === "DESC" ? "down" : "up"
+            item.value.split("_").pop() === "DESC" ? "down" : "up"
           }`}
         />
       </div>
@@ -56,15 +67,12 @@ class ItemsList extends React.Component {
   };
   render() {
     const { category } = this.props;
-    const { value, sortList } = this.state;
+    const { variables, sortList } = this.state;
     return (
       <div>
         <Query
           query={schema_items}
-          variables={{
-            category: `${category}`,
-            orderBy: `${value ? value : "id_ASC"}`,
-          }}
+          variables={variables}
         >
           {({ loading, error, data }) => {
             if (loading) {
@@ -86,10 +94,11 @@ class ItemsList extends React.Component {
                 <div className="itemsList__top">
                   <h3>{category === "melonFruit"? "Melon & Fruit" : `${category.charAt(0).toUpperCase() + category.slice(1)}`}</h3>
                   {this.props.user.accountType === "Admin" && (
-                    <ItemFormModal category={category} />
+                    <ItemFormModal category={category} variables={variables}/>
                   )}
                   <InputPicker
-                    value={value}
+                    value={variables.orderBy}
+                    defaultValue={'popularity_DESC'}
                     placeholder="Sort By"
                     onChange={this.handleChange}
                     data={sortList}
@@ -123,8 +132,9 @@ class ItemsList extends React.Component {
                                 isEdit
                                 data={item}
                                 imgURL={imgURL}
+                                variables={variables}
                               />
-                              <DeleteItem category={category} data={item} />
+                              <DeleteItem category={category} data={item} variables={variables}/>
                             </ButtonGroup>
                           </div>
                         </Panel>

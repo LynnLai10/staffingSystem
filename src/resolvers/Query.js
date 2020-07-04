@@ -131,14 +131,16 @@ const Query = {
   //----------------------  Item  -------------------------//
 
   items (parent, args, { prisma, request }, info) {
-    return prisma.query.items({
+    const opArgs = {
+      first: args.first,
+      skip: args.skip,
+      orderBy: args.orderBy,
       where: {
         category: args.category
       },
-      orderBy: args.orderBy
-    }, info)
+  }
+    return prisma.query.items(opArgs, info)
   }
 };
-
 
 export { Query as default };

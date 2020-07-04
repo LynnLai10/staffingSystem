@@ -7,7 +7,7 @@ type Query {
   myFreetimes(schedule_No: String!): [Freetime]
   schedule(schedule_No: String!): Schedule
   mySchedule(schedule_No: String!): [Schedule_Staff]
-  items(category: String, orderBy: String): [Item]
+  items(category: String, first: Int, skip: Int, orderBy: String): [Item]
 }
 
 type Mutation {

@@ -99,7 +99,7 @@ class ItemFormModal extends React.Component {
       mutate({
         variables,
         refetchQueries: [
-          { query: schema_items, variables: { category: this.props.category } },
+          { query: schema_items, variables: this.props.variables },
         ],
       }).then(() => {});
     }

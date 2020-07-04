@@ -25,7 +25,7 @@ class DeleteItem extends React.Component {
         id,
       },
       refetchQueries: [
-        { query: schema_items, variables: { category } },
+        { query: schema_items, variables: this.props.variables },
       ],
     });
     //delete img.jpg at public/img
