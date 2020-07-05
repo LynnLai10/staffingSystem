@@ -22,31 +22,39 @@ const inputTemplate = `
 `;
 
 //-------------------------------------------------------------------
-const schema_items_content =`
-  query Items ($category: String! $orderBy: String){
-    items(category: $category orderBy: $orderBy) {` +
-  dataTemplate +
-  `}
+const schema_items_content =
+  `
+  query Items ($category: String! $orderBy: String $first: Int, $skip: Int){
+    items(category: $category orderBy: $orderBy first: $first skip: $skip) {
+      count
+      items {` +
+      dataTemplate +
+      `}
+    }
   }
 `;
 export const schema_items = gql`
   ${schema_items_content}
 `;
 //--------------------------------------------------------------------
-const schema_createItem_content = `
-  mutation CreateItem(`
-   + variablesTemplate +  
+const schema_createItem_content =
+  `
+  mutation CreateItem(` +
+  variablesTemplate +
   `) {
     createItem(
       auth: "Eg80949597"
-      data: {`
-       + inputTemplate +  
-      `}
-    ){` + dataTemplate + 
-    `}
+      data: {` +
+  inputTemplate +
+  `}
+    ){` +
+  dataTemplate +
+  `}
   }
 `;
-export const schema_createItem = gql`${schema_createItem_content}`;
+export const schema_createItem = gql`
+  ${schema_createItem_content}
+`;
 //----------------------------------------------------------------------
 const schema_updateItem_content =
   `

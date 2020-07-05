@@ -114,33 +114,50 @@ const Query = {
       info
     );
   },
-  async mySchedule (parent, args, { prisma, request }, info) {
+  async mySchedule(parent, args, { prisma, request }, info) {
     const employeeId = await getUserId(request);
-    return prisma.query.schedule_Staffs({
-      where: {
-        schedule: {
-          schedule_No: args.schedule_No
+    return prisma.query.schedule_Staffs(
+      {
+        where: {
+          schedule: {
+            schedule_No: args.schedule_No,
+          },
+          staff: {
+            employeeId,
+          },
         },
-        staff: {
-          employeeId
-        }
-      }
-    }, info)
+      },
+      info
+    );
   },
 
   //----------------------  Item  -------------------------//
 
-  items (parent, args, { prisma, request }, info) {
+  async items(parent, args, { prisma, request }, info) {
     const opArgs = {
       first: args.first,
       skip: args.skip,
       orderBy: args.orderBy,
       where: {
-        category: args.category
+        category: args.category,
       },
-  }
-    return prisma.query.items(opArgs, info)
-  }
+    };
+    //get the sum of all data in the category
+    const itemCount = await prisma.query.itemsConnection(
+      {
+        where: {
+          category: args.category,
+        },
+      },
+      "{ aggregate{count}}"
+    );
+    //get data in the category
+    const items = await prisma.query.items(opArgs);
+    return {
+      items,
+      count: itemCount.aggregate.count,
+    };
+  },
 };
 
 export { Query as default };
