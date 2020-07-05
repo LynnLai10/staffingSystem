@@ -126,7 +126,7 @@ class ItemsList extends React.Component {
                 <FlexboxGrid justify="center">
                   {data.items.items.map((item) => {
                     const { id, description_en, description_cn } = item;
-                    const imgURL = `../../img/checkout/${category}/${id}.jpg`;
+                    const imgURL = `../../img/checkout/${category}/${id}.png`;
                     return (
                       <FlexboxGrid.Item key={id}>
                         <Panel

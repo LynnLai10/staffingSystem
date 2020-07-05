@@ -1,22 +1,13 @@
 import "@babel/polyfill/noConflict";
 import server from "./graphqlServer";
 import multer from "multer";
+import sharp from "sharp";
 const fs = require("fs");
 const path = require("path");
 const imgPath = (category) =>
-  path.join(
-    __dirname,
-    `../client/public/img/checkout${category && `/${category}`}`
-  );
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(
-      null,
-      path.join(__dirname, "../client/public/img/checkout/" + req.params.category)
-    );
-  },
-});
+  path.join(__dirname, `../client/public/img/checkout/${category}`);
 
+const storage = multer.memoryStorage();
 const upload = multer({
   storage,
   limits: {
@@ -24,26 +15,20 @@ const upload = multer({
   },
 });
 
-const renameImg = (req, res) => {
-  const oldPath = path.join(imgPath(req.params.category), req.file.filename);
-  const newPath = path.join(imgPath(req.params.category), `${req.body.id}.jpg`);
-  fs.rename(oldPath, newPath, (err) => {
-    if (err) throw err;
-  });
-  res.send();
-};
-
 server.express.post(
   "/checkout/:category",
   upload.single("checkout"),
   async (req, res) => {
-    renameImg(req, res);
+    sharp(req.file.buffer)
+      .resize({ width: 200 })
+      .toFile(path.join(imgPath(req.params.category), `${req.body.id}.png`));
+    res.send();
   }
 );
 
 server.express.delete("/checkout/delete/:category/:id", async (req, res) => {
   fs.unlink(
-    path.join(imgPath(req.params.category), `${req.params.id}.jpg`),
+    path.join(imgPath(req.params.category), `${req.params.id}.png`),
     (err) => {
       if (err) throw err;
     }
