@@ -27,27 +27,40 @@ server.express.post(
   "/checkout/:category",
   upload.array("checkout", 3),
   async (req, res) => {
-    console.log(req.files)
     //find the fileKeys based on the originalName
-    const index = req.body.originalName.split(',').findIndex(item => item === req.files[0].originalname)
+    const index = req.body.originalName
+      .split(",")
+      .findIndex((item) => item === req.files[0].originalname);
     //resize and rename by id + fileKeys
     sharp(req.files[0].buffer)
-      .resize({ width: 150, height: 150, fit: sharp.fit.contain, background: { r: 255, g: 255, b: 255, alpha: 1 } })
-      .toFile(imgPath(req.params.category) + '/' + req.body.id + '-' + req.body.fileKeys.split(',')[index] + '.jpg');
+      .resize({
+        width: 150,
+        height: 150,
+        fit: sharp.fit.contain,
+        background: { r: 255, g: 255, b: 255, alpha: 1 },
+      })
+      .toFile(
+        imgPath(req.params.category) +
+          "/" +
+          req.body.fileKeys.split(",")[index] +
+          ".jpg"
+      );
     res.send();
   }
 );
 
-server.express.delete("/checkout/delete/:category/:fileName", async (req, res) => {
-  console.log(req.params)
-  fs.unlink(
-    path.join(imgPath(req.params.category), `${req.params.fileName}`),
-    (err) => {
-      if (err) throw err;
-    }
-  );
-  res.send();
-});
+server.express.delete(
+  "/checkout/delete/:category/:fileName",
+  async (req, res) => {
+    fs.unlink(
+      path.join(imgPath(req.params.category), `${req.params.fileName}`),
+      (err) => {
+        if (err) throw err;
+      }
+    );
+    res.send();
+  }
+);
 
 server.start({ port: process.env.PORT || 4000 }, () => {
   console.log("The server is up.");

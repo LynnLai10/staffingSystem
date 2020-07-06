@@ -130,7 +130,7 @@ class ItemsList extends React.Component {
                   {data.items.items.map((item) => {
                     const imgURLs = item.fileKeys
                     .split(",")
-                    .map((el) => `../../img/checkout/${category}/${item.id}-${el}.jpg`)
+                    .map((el) => `../../img/checkout/${category}/${el}.jpg`)
                     return (
                       <Item
                         data={item}

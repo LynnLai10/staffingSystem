@@ -32,7 +32,7 @@ class DeleteItem extends React.Component {
     //delete img.jpg at public/img
     if (fileKeys.length !== 0)
       for (let i = 0; i < fileKeys.length; i++) {
-        axios.delete(`/checkout/delete/${category}/${id}-${fileKeys[i]}.jpg`);
+        axios.delete(`/checkout/delete/${category}/${fileKeys[i]}.jpg`);
       }
   };
   render() {

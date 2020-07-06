@@ -112,12 +112,11 @@ class ItemFormModal extends React.Component {
           },
         ],
       });
+      this.uploader.start()
     }
   };
   handleMutationComplete = () => {
     const { removeFiles } = this.state;
-    //uploader must execute before modal closed
-    this.uploader.start();
     this.close();
     Alert.success("Success.");
     if (removeFiles.length !== 0) {
@@ -148,18 +147,15 @@ class ItemFormModal extends React.Component {
   };
   render() {
     const { isEdit, category } = this.props;
-    const { formValue, show, formError, uploadFiles, removeFiles } = this.state;
+    const { formValue, show, formError, uploadFiles } = this.state;
     const schema = isEdit ? schema_updateItem : schema_createItem;
     return (
       <div>
         <Modal show={show} onHide={this.close} size="xs">
           <Mutation mutation={schema} onCompleted={this.handleMutationComplete}>
-            {(mutate, { loading, error, data }) => {
+            {(mutate, { loading, error }) => {
               const uploadData = {
-                id: isEdit ? this.props.data.id : data && data.createItem.id, //edit
-                fileKeys: isEdit
-                  ? this.props.data.fileKeys
-                  : formValue.fileKeys,
+                fileKeys: formValue.fileKeys,
                 originalName: uploadFiles.map((item) => item.name).join(","),
               };
               return (
