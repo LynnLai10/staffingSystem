@@ -3,11 +3,9 @@ import { connect } from "react-redux";
 import { Query } from "@apollo/react-components";
 import { schema_items } from "../../schema/item";
 import ItemFormModal from "./ItemFormModal";
-import DeleteItem from "./DeleteItem";
+import Item from "./Item";
 import {
-  Panel,
   FlexboxGrid,
-  ButtonGroup,
   Divider,
   Loader,
   Alert,
@@ -47,14 +45,12 @@ class ItemsList extends React.Component {
     };
   }
   handleChange = (value) => {
-    console.log(value);
     this.setState((prevState) => ({
       variables: {
         ...prevState.variables,
         orderBy: value ? value : "id_ASC",
       },
     }));
-    console.log(this.state.variables);
   };
   handleActivePage = (eventKey) => {
     this.setState((prevState) => ({
@@ -82,7 +78,10 @@ class ItemsList extends React.Component {
     const { variables, sortList, activePage } = this.state;
     return (
       <div>
-        <Query query={schema_items} variables={variables}>
+        <Query
+          query={schema_items}
+          variables={variables}
+        >
           {({ loading, error, data }) => {
             if (loading) {
               return (
@@ -109,7 +108,11 @@ class ItemsList extends React.Component {
                         }`}
                   </h3>
                   {this.props.user.accountType === "Admin" && (
-                    <ItemFormModal category={category} variables={variables} />
+                    <ItemFormModal
+                      category={category}
+                      variables={variables}
+                      items={data.items}
+                    />
                   )}
                   <InputPicker
                     value={variables.orderBy}
@@ -125,54 +128,35 @@ class ItemsList extends React.Component {
                 <Divider />
                 <FlexboxGrid justify="center">
                   {data.items.items.map((item) => {
-                    const { id, description_en, description_cn } = item;
-                    const imgURL = `../../img/checkout/${category}/${id}.png`;
+                    const imgURLs = item.fileKeys
+                    .split(",")
+                    .map((el) => `../../img/checkout/${category}/${item.id}-${el}.jpg`)
                     return (
-                      <FlexboxGrid.Item key={id}>
-                        <Panel
-                          shaded
-                          bordered
-                          bodyFill
-                          className="itemsList__panel"
-                        >
-                          <img src={imgURL} height="200" alt="rice" />
-                          <div>
-                            <div className="itemsList__description">
-                              <h5>{description_en}</h5>
-                              <h5>{description_cn}</h5>
-                            </div>
-                            <ButtonGroup className="itemsList__btn">
-                              <ItemFormModal
-                                category={category}
-                                isEdit
-                                data={item}
-                                imgURL={imgURL}
-                                variables={variables}
-                              />
-                              <DeleteItem
-                                category={category}
-                                data={item}
-                                variables={variables}
-                              />
-                            </ButtonGroup>
-                          </div>
-                        </Panel>
-                      </FlexboxGrid.Item>
-                    );
+                      <Item
+                        data={item}
+                        items={data.items}
+                        category={category}
+                        variables={variables}
+                        key={item.id}
+                        imgURLs={imgURLs}
+                      />
+                    )
                   })}
                 </FlexboxGrid>
-                {data.items.count > 0 && <Pagination
-                  prev
-                  last
-                  next
-                  first
-                  size="lg"
-                  maxButtons={5}
-                  pages={Math.floor(data.items.count / variables.first) + 1}
-                  activePage={activePage}
-                  onSelect={this.handleActivePage}
-                  className="itemsList__footer"
-                />}
+                {data.items.count > 0 && (
+                  <Pagination
+                    prev
+                    last
+                    next
+                    first
+                    size="lg"
+                    maxButtons={5}
+                    pages={Math.floor(data.items.count / variables.first) + 1}
+                    activePage={activePage}
+                    onSelect={this.handleActivePage}
+                    className="itemsList__footer"
+                  />
+                )}
               </div>
             );
           }}

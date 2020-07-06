@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Fri Jul 03 2020 13:54:29 GMT+1000 (Australian Eastern Standard Time)
+# timestamp: Sun Jul 05 2020 20:37:39 GMT+1000 (Australian Eastern Standard Time)
 
 type AggregateFreetime {
   count: Int!
@@ -554,6 +554,7 @@ type Item implements Node {
   description_cn: String!
   popularity: Int!
   category: String!
+  fileKeys: String
 }
 
 """A connection to a list of items."""
@@ -572,6 +573,7 @@ input ItemCreateInput {
   description_cn: String!
   popularity: Int!
   category: String!
+  fileKeys: String
 }
 
 """An edge in a connection."""
@@ -594,6 +596,8 @@ enum ItemOrderByInput {
   popularity_DESC
   category_ASC
   category_DESC
+  fileKeys_ASC
+  fileKeys_DESC
 }
 
 type ItemPreviousValues {
@@ -602,6 +606,7 @@ type ItemPreviousValues {
   description_cn: String!
   popularity: Int!
   category: String!
+  fileKeys: String
 }
 
 type ItemSubscriptionPayload {
@@ -646,6 +651,7 @@ input ItemUpdateInput {
   description_cn: String
   popularity: Int
   category: String
+  fileKeys: String
 }
 
 input ItemUpdateManyMutationInput {
@@ -653,6 +659,7 @@ input ItemUpdateManyMutationInput {
   description_cn: String
   popularity: Int
   category: String
+  fileKeys: String
 }
 
 input ItemWhereInput {
@@ -846,6 +853,46 @@ input ItemWhereInput {
 
   """All values not ending with the given string."""
   category_not_ends_with: String
+  fileKeys: String
+
+  """All values that are not equal to given value."""
+  fileKeys_not: String
+
+  """All values that are contained in given list."""
+  fileKeys_in: [String!]
+
+  """All values that are not contained in given list."""
+  fileKeys_not_in: [String!]
+
+  """All values less than the given value."""
+  fileKeys_lt: String
+
+  """All values less than or equal the given value."""
+  fileKeys_lte: String
+
+  """All values greater than the given value."""
+  fileKeys_gt: String
+
+  """All values greater than or equal the given value."""
+  fileKeys_gte: String
+
+  """All values containing the given string."""
+  fileKeys_contains: String
+
+  """All values not containing the given string."""
+  fileKeys_not_contains: String
+
+  """All values starting with the given string."""
+  fileKeys_starts_with: String
+
+  """All values not starting with the given string."""
+  fileKeys_not_starts_with: String
+
+  """All values ending with the given string."""
+  fileKeys_ends_with: String
+
+  """All values not ending with the given string."""
+  fileKeys_not_ends_with: String
 }
 
 input ItemWhereUniqueInput {

@@ -92,6 +92,7 @@ input CreateItemInput {
   description_cn: String!
   popularity: Int!
   category: String!
+  fileKeys: String!
 }
 
 input UpdateItemInput {
@@ -99,6 +100,7 @@ input UpdateItemInput {
   description_cn: String
   popularity: Int
   category: String!
+  fileKeys: String
 }
 
 type User {
@@ -171,4 +173,5 @@ type Item {
   description_cn: String!
   popularity: Int!
   category: String!
+  fileKeys: String!
 }

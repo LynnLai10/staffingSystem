@@ -26,11 +26,6 @@
   margin-top: 0.5rem;
 }
 
-.itemFormModal___slider {
-  width: 20rem;
-  margin-left: 3rem;
-}
-
 .itemsList__header {
   display: flex;
   justify-content: flex-end;
@@ -41,6 +36,11 @@
 .itemsList__header h3 {
   margin-right: auto;
 }
+
+.itemsList__carousel {
+  width: 200px;
+  height: auto;
+}
 .itemsList__sortBy {
   width: 16rem;
   margin-left: 1rem;
@@ -48,4 +48,10 @@
 
 .itemsList__footer {
   margin: 0 auto;
+}
+
+//itemFormModal
+.itemFormModal___slider {
+  width: 20rem;
+  margin-left: 3rem;
 }

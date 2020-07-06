@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios'
+import axios from "axios";
 import { Mutation } from "@apollo/react-components";
 import { schema_deleteItem, schema_items } from "../../schema/item";
 import { Modal, Button, Icon, IconButton, Alert } from "rsuite";
@@ -18,8 +18,9 @@ class DeleteItem extends React.Component {
     this.setState({ show: true });
   };
   handleSubmit = (deleteItem) => {
-    const { id } = this.props.data
-    const { category } = this.props
+    const { id } = this.props.data;
+    const { category } = this.props;
+    const fileKeys = this.props.data.fileKeys.split(",");
     deleteItem({
       variables: {
         id,
@@ -29,7 +30,10 @@ class DeleteItem extends React.Component {
       ],
     });
     //delete img.jpg at public/img
-    axios.delete(`/checkout/delete/${category}/${id}`)
+    if (fileKeys.length !== 0)
+      for (let i = 0; i < fileKeys.length; i++) {
+        axios.delete(`/checkout/delete/${category}/${id}-${fileKeys[i]}.jpg`);
+      }
   };
   render() {
     const { show } = this.state;

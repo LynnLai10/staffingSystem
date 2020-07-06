@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { Mutation } from "@apollo/react-components";
 import {
   schema_createItem,
@@ -55,13 +56,13 @@ class ItemFormModal extends React.Component {
         description_cn: "",
         popularity: 3,
         category: this.props.category,
+        fileKeys: "",
       },
       formError: {},
       show: false,
       id: "",
-      uploadFile: this.props.isEdit
-        ? [{ filekey: 1, url: this.props.imgURL }]
-        : [],
+      uploadFiles: [],
+      removeFiles: [],
     };
     this.state = Object.assign({}, this.initialState);
   }
@@ -72,10 +73,16 @@ class ItemFormModal extends React.Component {
   open = () => {
     this.setState({ show: true });
     if (this.props.isEdit) {
-      delete this.props.data.__typename;
+      const { data, imgURLs } = this.props;
+      delete data.__typename;
       this.setState({
-        id: this.props.data.id,
-        formValue: this.props.data,
+        id: data.id,
+        formValue: data,
+        uploadFiles: imgURLs.map((item, index) => ({
+          name: item.split("/").pop(),
+          fileKey: data.fileKeys.split(",")[index],
+          url: item,
+        })),
       });
     }
   };
@@ -89,7 +96,6 @@ class ItemFormModal extends React.Component {
       Alert.error("Error");
     } else {
       const { id, formValue } = this.state;
-      console.log(formValue);
       const variables = this.props.isEdit
         ? formValue
         : {
@@ -99,145 +105,172 @@ class ItemFormModal extends React.Component {
       mutate({
         variables,
         refetchQueries: [
-          { query: schema_items, variables: this.props.variables },
+          {
+            query: schema_items,
+            variables: this.props.variables,
+            fetchPolicy: "network-only",
+          },
         ],
-      }).then(() => {});
+      });
     }
   };
+  handleMutationComplete = () => {
+    const { removeFiles } = this.state;
+    //uploader must execute before modal closed
+    this.uploader.start();
+    this.close();
+    Alert.success("Success.");
+    if (removeFiles.length !== 0) {
+      for (let i = 0; i < removeFiles.length; i++) {
+        axios.delete(
+          `/checkout/delete/${this.props.category}/${removeFiles[i].name}`
+        );
+      }
+    }
+  };
+
   //uplaod function
   handleUploaderChange = (value) => {
-    console.log(value);
-    this.setState({ uploadFile: value });
+    this.setState((prevState) => ({
+      formValue: {
+        ...prevState.formValue,
+        fileKeys: value.map((item) => item.fileKey).join(","),
+      },
+      uploadFiles: value,
+    }));
   };
-  handleReupload = (file) => {
-    this.uploader.start(file);
+  handleRemove = (value) => {
+    if (!value.hasOwnProperty("blobFile")) {
+      this.setState((prevState) => ({
+        removeFiles: [...prevState.removeFiles, value],
+      }));
+    }
   };
   render() {
     const { isEdit, category } = this.props;
-    const { formValue, show, formError, uploadFile } = this.state;
+    const { formValue, show, formError, uploadFiles, removeFiles } = this.state;
     const schema = isEdit ? schema_updateItem : schema_createItem;
     return (
       <div>
-        {show && (
-          <Modal show={show} onHide={this.close} size="xs">
-            <Mutation
-              mutation={schema}
-              onCompleted={() => {
-                //uploader must execute before modal closed
-                this.uploader.start();
-                this.close();
-                Alert.success("Success.");
-              }}
-            >
-              {(mutate, { loading, error, data }) => {
-                return (
-                  <div>
-                    <Modal.Header>
-                      <Modal.Title>{isEdit ? "Edit" : "New"} Item</Modal.Title>
-                    </Modal.Header>
+        <Modal show={show} onHide={this.close} size="xs">
+          <Mutation mutation={schema} onCompleted={this.handleMutationComplete}>
+            {(mutate, { loading, error, data }) => {
+              const uploadData = {
+                id: isEdit ? this.props.data.id : data && data.createItem.id, //edit
+                fileKeys: isEdit
+                  ? this.props.data.fileKeys
+                  : formValue.fileKeys,
+                originalName: uploadFiles.map((item) => item.name).join(","),
+              };
+              return (
+                <div>
+                  <Modal.Header>
+                    <Modal.Title>{isEdit ? "Edit" : "New"} Item</Modal.Title>
+                  </Modal.Header>
 
-                    <Modal.Body>
-                      <Form
-                        fluid
-                        ref={(ref) => (this.form = ref)}
-                        onChange={this.handleChange}
-                        formValue={formValue}
-                        model={model}
-                        onCheck={(formError) => {
-                          this.setState({ formError });
-                        }}
-                      >
-                        <CustomField
-                          name="description_en"
-                          label={`${
-                            category === "rice" ? "Brand Name" : "Description"
-                          } in English`}
-                          error={formError.description_en}
-                        />
-                        <CustomField
-                          name="description_cn"
-                          label={`${
-                            category === "rice" ? "Brand Name" : "Description"
-                          } in Chinese`}
-                          error={formError.description_cn}
-                        />
-                        <CustomField
-                          name="popularity"
-                          label="Popularity"
-                          accepter={Slider}
-                          min={1}
-                          setp={1}
-                          max={5}
-                          graduated
-                          progress
-                          renderMark={(mark) => {
-                            switch (mark) {
-                              case 5:
-                                return "High";
-                              case 3:
-                                return "Middle";
-                              case 1:
-                                return "Low";
-                              default:
-                                return "";
-                            }
-                          }}
-                          className="itemFormModal___slider"
-                        ></CustomField>
-                        <div>
-                          <Uploader
-                            autoUpload={false}
-                            action={`/checkout/${category}`}
-                            name="checkout"
-                            onChange={this.handleUploaderChange}
-                            data={{
-                              id: isEdit
-                                ? this.props.data.id
-                                : data && data.createItem.id,
-                            }}
-                            defaultFileList={uploadFile}
-                            accept="image/*"
-                            listType="picture"
-                            multiple={false}
-                            disabled={uploadFile.length === 1}
-                            ref={(ref) => {
-                              this.uploader = ref;
-                            }}
-                          />
-                        </div>
-                      </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button
-                        appearance="primary"
-                        onClick={() => {
-                          this.handleSubmit(mutate);
-                        }}
-                        type="submit"
-                        disabled={!uploadFile.length}
-                      >
-                        Confirm
-                      </Button>
-                      <Button onClick={this.close} appearance="subtle">
-                        Cancel
-                      </Button>
-                    </Modal.Footer>
-                    {loading && (
-                      <Loader
-                        backdrop
-                        center
-                        size="md"
-                        content={`Saving...`}
-                        vertical
+                  <Modal.Body>
+                    <Form
+                      fluid
+                      ref={(ref) => (this.form = ref)}
+                      onChange={this.handleChange}
+                      formValue={formValue}
+                      model={model}
+                      onCheck={(formError) => {
+                        this.setState({ formError });
+                      }}
+                    >
+                      <CustomField
+                        name="description_en"
+                        label={`${
+                          category === "rice" ? "Brand Name" : "Description"
+                        } in English`}
+                        error={formError.description_en}
                       />
-                    )}
-                    {error && Alert.error("Failed. Please try again.")}
-                  </div>
-                );
-              }}
-            </Mutation>
-          </Modal>
-        )}
+                      <CustomField
+                        name="description_cn"
+                        label={`${
+                          category === "rice" ? "Brand Name" : "Description"
+                        } in Chinese`}
+                        error={formError.description_cn}
+                      />
+                      <CustomField
+                        name="popularity"
+                        label="Popularity"
+                        accepter={Slider}
+                        min={1}
+                        setp={1}
+                        max={5}
+                        graduated
+                        progress
+                        renderMark={(mark) => {
+                          switch (mark) {
+                            case 5:
+                              return "High";
+                            case 3:
+                              return "Middle";
+                            case 1:
+                              return "Low";
+                            default:
+                              return "";
+                          }
+                        }}
+                        className="itemFormModal___slider"
+                      ></CustomField>
+                      <div>
+                        <Uploader
+                          autoUpload={false}
+                          action={`/checkout/${category}`}
+                          name="checkout"
+                          onChange={this.handleUploaderChange}
+                          onRemove={this.handleRemove}
+                          data={uploadData}
+                          defaultFileList={uploadFiles}
+                          accept="image/*"
+                          listType="picture"
+                          multiple
+                          disabled={uploadFiles.length > 2}
+                          ref={(ref) => {
+                            this.uploader = ref;
+                          }}
+                        />
+                      </div>
+                      <small>
+                        {uploadFiles.length < 4
+                          ? `File number limit: ${3 - uploadFiles.length}`
+                          : "Exceed the maximum upload amount, please delete files."}
+                      </small>
+                    </Form>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      appearance="primary"
+                      onClick={() => {
+                        this.handleSubmit(mutate);
+                      }}
+                      type="submit"
+                      disabled={!uploadFiles.length || uploadFiles.length > 3}
+                    >
+                      Confirm
+                    </Button>
+                    <Button onClick={this.close} appearance="subtle">
+                      Cancel
+                    </Button>
+                  </Modal.Footer>
+                  {loading && (
+                    <Loader
+                      backdrop
+                      center
+                      size="md"
+                      content={`Saving...`}
+                      vertical
+                    />
+                  )}
+                  {error && Alert.error("Failed. Please try again.")}
+                </div>
+              );
+            }}
+          </Mutation>
+        </Modal>
         {isEdit ? (
           <IconButton
             appearance="subtle"

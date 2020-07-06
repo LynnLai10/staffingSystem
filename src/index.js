@@ -8,27 +8,40 @@ const imgPath = (category) =>
   path.join(__dirname, `../client/public/img/checkout/${category}`);
 
 const storage = multer.memoryStorage();
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, imgPath(req.params.category))
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname)
+//   }
+// });
 const upload = multer({
   storage,
   limits: {
-    fileSize: 5000000,
+    fileSize: 3000000,
   },
 });
 
 server.express.post(
   "/checkout/:category",
-  upload.single("checkout"),
+  upload.array("checkout", 3),
   async (req, res) => {
-    sharp(req.file.buffer)
-      .resize({ width: 200 })
-      .toFile(path.join(imgPath(req.params.category), `${req.body.id}.png`));
+    console.log(req.files)
+    //find the fileKeys based on the originalName
+    const index = req.body.originalName.split(',').findIndex(item => item === req.files[0].originalname)
+    //resize and rename by id + fileKeys
+    sharp(req.files[0].buffer)
+      .resize({ width: 150, height: 150, fit: sharp.fit.contain, background: { r: 255, g: 255, b: 255, alpha: 1 } })
+      .toFile(imgPath(req.params.category) + '/' + req.body.id + '-' + req.body.fileKeys.split(',')[index] + '.jpg');
     res.send();
   }
 );
 
-server.express.delete("/checkout/delete/:category/:id", async (req, res) => {
+server.express.delete("/checkout/delete/:category/:fileName", async (req, res) => {
+  console.log(req.params)
   fs.unlink(
-    path.join(imgPath(req.params.category), `${req.params.id}.png`),
+    path.join(imgPath(req.params.category), `${req.params.fileName}`),
     (err) => {
       if (err) throw err;
     }
