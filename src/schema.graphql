@@ -11,7 +11,7 @@ type Query {
 }
 
 type Mutation {
-  createUser(auth: String!, data: CreateUserInput!): User
+  createUser(data: CreateUserInput!): User
   updateUser(employeeId: String!, data: UpdateUserInput!): User
   deleteUser(employeeId: String!): User
   changePassword(employeeId: String!, data: ChangePasswordInput!): User
@@ -27,7 +27,7 @@ type Mutation {
   updateSchedule_Staffs(oldStaffs: [UpdateSchedule_StaffsInput], newStaffs: [UpdateSchedule_StaffsInput]): Aggregate
   deleteSchedule_Staffs(schedule_No: String!): Aggregate
 
-  createItem(auth: String!, data: CreateItemInput!): Item
+  createItem(data: CreateItemInput!): Item
   updateItem(id: ID!, data: UpdateItemInput!): Item
   deleteItem(id: ID!): Item
 }

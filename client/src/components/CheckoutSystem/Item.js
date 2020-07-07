@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import ItemFormModal from "./ItemFormModal";
 import DeleteItem from "./DeleteItem";
 import { Panel, FlexboxGrid, ButtonGroup, Carousel } from "rsuite";
@@ -36,21 +37,23 @@ class Item extends React.Component {
               <h5>{description_en}</h5>
               <h5>{description_cn}</h5>
             </div>
-            <ButtonGroup className="itemsList__btn">
-              <ItemFormModal
-                category={category}
-                isEdit
-                data={data}
-                items={items}
-                imgURLs={imgURLs}
-                variables={variables}
-              />
-              <DeleteItem
-                category={category}
-                data={data}
-                variables={variables}
-              />
-            </ButtonGroup>
+            {this.props.user.accountType === "Admin" && (
+              <ButtonGroup className="itemsList__btn">
+                <ItemFormModal
+                  category={category}
+                  isEdit
+                  data={data}
+                  items={items}
+                  imgURLs={imgURLs}
+                  variables={variables}
+                />
+                <DeleteItem
+                  category={category}
+                  data={data}
+                  variables={variables}
+                />
+              </ButtonGroup>
+            )}
           </div>
         </Panel>
       </FlexboxGrid.Item>
@@ -58,4 +61,8 @@ class Item extends React.Component {
   }
 }
 
-export default Item;
+const mapStateToProps = ({ user }) => {
+  return { user: user.user };
+};
+
+export default connect(mapStateToProps)(Item);

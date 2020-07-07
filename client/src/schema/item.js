@@ -46,7 +46,6 @@ const schema_createItem_content =
   variablesTemplate +
   `) {
     createItem(
-      auth: "Eg80949597"
       data: {` +
   inputTemplate +
   `}
