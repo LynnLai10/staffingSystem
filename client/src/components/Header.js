@@ -19,8 +19,9 @@ class Header extends React.Component {
         <div>
           <Button
             onClick={this.handleClick}
-            appearance="primary"
+            appearance="default"
             className="header_btn"
+            size="lg"
           >
             Logout
           </Button>

@@ -77,7 +77,7 @@ class Welcome extends React.Component {
     const { sex, hireDate, lastLogin } = this.props.user;
     const employeedDays = moment(new Date(hireDate)).format("YYYY-MM-DD");
     const now = moment().format("YYYY-MM-DD");
-    const diff = moment.preciseDiff(employeedDays, now, true)
+    const diff = moment.preciseDiff(employeedDays, now, true);
     return (
       <Panel bordered className="welcome__lastLogin">
         <FlexboxGrid justify="space-around">
@@ -94,7 +94,9 @@ class Welcome extends React.Component {
             <p className="welcome__lastlogin__first">Last Login:</p>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={13}>
-            <p>{diff.years}years {diff.months}months {diff.days}days</p>
+            <p>{`${diff.years !== 0 ? `${diff.years}years` : ""} ${
+              diff.months !== 0 ? `${diff.months}months` : ""
+            } ${diff.days !== 0 ? `${diff.days}days` : ""}`}</p>
             <p>{moment(lastLogin).format("dddd, Do MMM YYYY, HH:mm")}</p>
           </FlexboxGrid.Item>
         </FlexboxGrid>

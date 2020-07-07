@@ -88,7 +88,6 @@ class FreetimeNext extends React.Component {
 }
 
 const mapStateToProps = ({ user }) => {
-  console.log(user.dates)
   return {
     user: user.user,
     dates: user.dates,
