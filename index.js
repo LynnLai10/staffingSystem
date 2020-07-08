@@ -1,11 +1,11 @@
 import "@babel/polyfill/noConflict";
-import server from "./graphqlServer";
+import server from "./src/graphqlServer";
 import multer from "multer";
 import sharp from "sharp";
 const fs = require("fs");
 const path = require("path");
 const imgPath = (category) =>
-  path.join(__dirname, `../client/public/img/checkout/${category}`);
+  path.join(__dirname, `./client/public/img/checkout/${category}`);
 
 const storage = multer.memoryStorage();
 const upload = multer({
