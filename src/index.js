@@ -8,14 +8,6 @@ const imgPath = (category) =>
   path.join(__dirname, `../client/public/img/checkout/${category}`);
 
 const storage = multer.memoryStorage();
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, imgPath(req.params.category))
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname)
-//   }
-// });
 const upload = multer({
   storage,
   limits: {
@@ -61,6 +53,13 @@ server.express.delete(
     res.send();
   }
 );
+
+if (process.env.NODE_ENV === 'production') {
+  server.express.use(server.express.static('client/bulid'))
+  server.express.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'bulid', 'index.html'))
+  })
+}
 
 server.start({ port: process.env.PORT || 4000 }, () => {
   console.log("The server is up.");
